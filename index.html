@@ -52,8 +52,11 @@
       gap: 12px;
     }
 
+    /* Logo ajustada para telas maiores */
     .header-logo {
-      height: 100px;
+      width: 100%;
+      max-width: 380px;
+      height: auto;
       object-fit: contain;
     }
 
@@ -238,10 +241,12 @@
       100% { opacity: 1; transform: scale(1.3); }
     }
 
-    /* Ajuste para Celulares */
+    /* Ajuste para Celulares (Logo Grande e Proporcional) */
     @media (max-width: 600px) {
       .header-logo {
-        height: 38px;
+        width: 90%;
+        max-width: 320px;
+        height: auto;
       }
 
       header h1 {
