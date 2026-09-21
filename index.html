@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rádios Dj Marcelo - Cyber Station</title>
+  <title>Rádio DJ Marcelo</title>
   <style>
     :root {
       --bg-color: #030804;
@@ -33,7 +33,6 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      padding-bottom: 110px;
     }
 
     /* Cabeçalho Futurista */
@@ -42,51 +41,100 @@
       backdrop-filter: blur(12px);
       border-bottom: 2px solid var(--primary);
       box-shadow: 0 0 15px var(--primary-glow);
-      padding: 1rem;
+      padding: 0.8rem;
       text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    }
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .header-logo {
+      height: 48px;
+      object-fit: contain;
     }
 
     header h1 {
       color: var(--secondary);
       text-transform: uppercase;
-      letter-spacing: 3px;
-      font-size: 1.4rem;
+      letter-spacing: 2px;
+      font-size: 1.3rem;
       text-shadow: 0 0 8px var(--secondary-glow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
     }
 
-    header h1 span {
+    /* Player no Topo (Abaixo da Logo) */
+    .player-bar {
+      position: sticky;
+      top: 0;
+      background: rgba(3, 8, 4, 0.95);
+      backdrop-filter: blur(15px);
+      border-bottom: 2px solid var(--primary);
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 5px 20px rgba(0, 255, 102, 0.15);
+      z-index: 100;
+    }
+
+    .player-info {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .player-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: 1.5px solid var(--secondary);
+      box-shadow: 0 0 8px var(--secondary-glow);
+      object-fit: cover;
+    }
+
+    .player-info h4 {
+      color: var(--secondary);
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .player-info small {
+      font-size: 0.7rem;
       color: var(--primary);
-      text-shadow: 0 0 8px var(--primary-glow);
+    }
+
+    audio {
+      max-width: 320px;
+      width: 100%;
+      height: 34px;
+      filter: invert(1) hue-rotate(90deg) drop-shadow(0 0 4px var(--primary));
     }
 
     main {
       max-width: 1100px;
-      margin: 1.2rem auto;
-      padding: 0 0.8rem;
+      margin: 1rem auto;
+      padding: 0 0.8rem 2rem 0.8rem;
       width: 100%;
     }
 
-    /* Grid das Rádios - Otimizado para Mobile */
+    /* Grid das Rádios - Mais Compacto */
     .grid-radios {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.8rem;
     }
 
-    /* Card Futurista Compacto */
+    /* Card Compacto */
     .radio-card {
       background: var(--card-bg);
       backdrop-filter: blur(8px);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 0.9rem 0.6rem;
+      border-radius: 10px;
+      padding: 0.7rem 0.5rem;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -113,20 +161,20 @@
     }
 
     .radio-card:hover {
-      transform: translateY(-4px) scale(1.02);
+      transform: translateY(-3px) scale(1.02);
       border-color: var(--secondary);
-      box-shadow: 0 0 15px var(--secondary-glow);
+      box-shadow: 0 0 12px var(--secondary-glow);
     }
 
-    /* Ícones Menores */
+    /* Ícones Reduzidos */
     .radio-card img {
-      width: 80px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 0.7rem;
+      margin-bottom: 0.5rem;
       border: 2px solid var(--primary);
-      box-shadow: 0 0 10px var(--primary-glow);
+      box-shadow: 0 0 8px var(--primary-glow);
       background-color: #030804;
       transition: transform 0.3s ease;
     }
@@ -137,11 +185,11 @@
     }
 
     .radio-card h3 {
-      font-size: 0.85rem;
-      margin-bottom: 0.8rem;
+      font-size: 0.75rem;
+      margin-bottom: 0.6rem;
       color: var(--text);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       font-weight: 600;
       line-height: 1.2;
       height: 2.4em;
@@ -151,88 +199,37 @@
       overflow: hidden;
     }
 
-    /* Botão Play Futurista */
+    /* Botão Play */
     .btn-play {
       width: 100%;
       background: linear-gradient(135deg, rgba(0, 255, 102, 0.1), rgba(0, 255, 102, 0.2));
       border: 1px solid var(--primary);
       color: var(--primary);
-      padding: 0.5rem;
-      border-radius: 6px;
+      padding: 0.4rem;
+      border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       transition: all 0.2s;
     }
 
     .btn-play:hover {
       background: var(--primary);
       color: #000;
-      box-shadow: 0 0 12px var(--primary-glow);
-    }
-
-    /* Player Fixo no Rodapé (Estilo Sci-Fi) */
-    .player-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(3, 8, 4, 0.92);
-      backdrop-filter: blur(15px);
-      border-top: 2px solid var(--primary);
-      padding: 0.7rem 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 -5px 20px rgba(0, 255, 102, 0.15);
-      z-index: 100;
-    }
-
-    .player-info {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .player-info img {
-      width: 45px;
-      height: 45px;
-      border-radius: 8px;
-      border: 1.5px solid var(--secondary);
-      box-shadow: 0 0 8px var(--secondary-glow);
-      object-fit: cover;
-    }
-
-    .player-info h4 {
-      color: var(--secondary);
-      font-size: 0.9rem;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .player-info small {
-      font-size: 0.75rem;
-      color: var(--primary);
-    }
-
-    audio {
-      max-width: 350px;
-      width: 100%;
-      height: 36px;
-      filter: invert(1) hue-rotate(90deg) drop-shadow(0 0 4px var(--primary));
+      box-shadow: 0 0 10px var(--primary-glow);
     }
 
     /* Animação do Indicador 'Tocando Agora' */
     .playing-pulse {
       display: inline-block;
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       background-color: var(--primary);
       border-radius: 50%;
-      margin-right: 5px;
-      box-shadow: 0 0 8px var(--primary);
+      margin-right: 4px;
+      box-shadow: 0 0 6px var(--primary);
       animation: pulse 1.2s infinite alternate;
     }
 
@@ -241,50 +238,57 @@
       100% { opacity: 1; transform: scale(1.3); }
     }
 
-    /* Ajuste para Telas Pequenas de Celular */
+    /* Ajuste para Celulares */
     @media (max-width: 600px) {
+      .header-logo {
+        height: 38px;
+      }
+
+      header h1 {
+        font-size: 1.1rem;
+      }
+
       .grid-radios {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        gap: 0.75rem;
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 0.6rem;
       }
 
       .radio-card img {
-        width: 70px;
-        height: 70px;
+        width: 50px;
+        height: 50px;
       }
 
       .radio-card h3 {
-        font-size: 0.78rem;
+        font-size: 0.7rem;
       }
 
       .player-bar {
         flex-direction: column;
-        gap: 8px;
-        padding: 0.6rem;
+        gap: 6px;
+        padding: 0.5rem;
       }
 
       audio {
         max-width: 100%;
-        height: 32px;
+        height: 30px;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- Cabeçalho com a Logo Nova -->
   <header>
-    <h1>📻 <span>RADIO</span>DJ MARCELO</h1>
+    <div class="header-container">
+      <img src="logodj.png" alt="Logo Rádio DJ Marcelo" class="header-logo">
+      
+    </div>
   </header>
 
-  <main>
-    <!-- Grade de Rádios -->
-    <section class="grid-radios" id="radioGrid"></section>
-  </main>
-
-  <!-- Player de Áudio Fixo -->
+  <!-- Player de Áudio Fixo no Topo (Abaixo do Cabeçalho) -->
   <div class="player-bar">
     <div class="player-info">
-      <img id="currentLogo" src="https://via.placeholder.com/80/00ff66/000000?text=RADIO" alt="Logo">
+      <img id="currentLogo" src="logodj.jpg" alt="Logo">
       <div>
         <h4 id="currentTitle">Nenhuma rádio selecionada</h4>
         <small id="status" style="color: var(--text-muted)">Aguardando seleção</small>
@@ -293,10 +297,12 @@
     <audio id="audioPlayer" controls autoplay></audio>
   </div>
 
+  <main>
+    <!-- Grade de Rádios -->
+    <section class="grid-radios" id="radioGrid"></section>
+  </main>
+
   <script>
-    // ==========================================
-    // SUA LISTA DE RÁDIOS MANTIDA INTEGRALMENTE
-    // ==========================================
     const radios = [
       {
         name: "Dj Marcelo ROCK",
@@ -355,7 +361,7 @@
       },
       {
         name: "Dj Marcelo CHANTE FRANCE",
-        streamUrl: "hhttp://stream1.evasionfm.com/Chante_France?1789923528453",
+        streamUrl: "http://stream1.evasionfm.com/Chante_France?1789923528453",
         localImage: "cf.png" 
       }
     ];
@@ -376,7 +382,7 @@
         const imageSrc = radio.localImage;
 
         card.innerHTML = `
-          <img src="${imageSrc}" alt="${radio.name}" onerror="this.src='https://via.placeholder.com/120/00ff66/000000?text=RADIO'">
+          <img src="${imageSrc}" alt="${radio.name}" onerror="this.src='logodj.jpg'">
           <h3>${radio.name}</h3>
           <button class="btn-play" onclick="playRadio('${radio.streamUrl}', '${radio.name.replace(/'/g, "\\'")}', '${imageSrc}')">Ouvir</button>
         `;
