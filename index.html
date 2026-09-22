@@ -332,14 +332,14 @@
   </main>
 
   <script>
-    // Lista de Rádios com Nome do País e Imagem da Bandeira
+    // Lista de Rádios
     const radios = [
       {
         name: "ROCK",
         streamUrl: "https://stream.rockantenne.de/90er-rock/stream/mp3?aw_0_1st.playerid=radio.de",
         localImage: "rock.png",
         countryName: "Brasil",
-        countryFlag: "br.png" // coloque o arquivo de imagem da bandeira do Brasil na mesma pasta
+        countryFlag: "br.png"
       },
       {
         name: "FUNK",
@@ -416,73 +416,71 @@
         streamUrl: "https://stm1.srvif.com:21764/stream?1789923017551",
         localImage: "fdd.png",
         countryName: "Brasil",
-        countryFlag: "br.png" // imagem da bandeira da Espanha
+        countryFlag: "br.png"
       },
       {
         name: "RADIO GALICIA",
         streamUrl: "https://srv6022.dns-lcinternet.com:8059/live",
         localImage: "galicia.png",
         countryName: "Espanha",
-        countryFlag: "es.png" // imagem da bandeira da Espanha
+        countryFlag: "es.png"
       },
       {
         name: "BLUE MARLIN IBIZA",
         streamUrl: "https://srv6022.dns-lcinternet.com:8059/live",
         localImage: "blue.png",
         countryName: "Espanha",
-        countryFlag: "es.png" // imagem da bandeira da Espanha
+        countryFlag: "es.png"
       },
       {
         name: "IBIZA GLOBAL",
         streamUrl: "https://srv6022.dns-lcinternet.com:8059/live",
         localImage: "ibiza.png",
         countryName: "Espanha",
-        countryFlag: "es.png" // imagem da bandeira da Espanha
+        countryFlag: "es.png"
       },
       {
         name: "MUSIQUE CLASSIQUE",
         streamUrl: "https://icecast.radiofrance.fr/francemusique-hifi.aac",
         localImage: "classique.png",
-        countryName: "frança",
-        countryFlag: "fr.png" // imagem da bandeira da Espanha
+        countryName: "França",
+        countryFlag: "fr.png"
       },
       {
         name: "RADIO LATINA",
         streamUrl: "https://start-latina.ice.infomaniak.ch/start-latina-high.mp3",
         localImage: "rlatina.png",
-        countryName: "frança",
-        countryFlag: "fr.png" // imagem da bandeira da Espanha
+        countryName: "França",
+        countryFlag: "fr.png"
       },
       {
         name: "RAP FR",
         streamUrl: "https://generationfm-rap.ice.infomaniak.ch/generationfm-rap-high.mp3",
         localImage: "rapfr.png",
-        countryName: "frança",
-        countryFlag: "fr.png" // imagem da bandeira da Espanha
+        countryName: "França",
+        countryFlag: "fr.png"
       },
       {
         name: "SKYROCK",
         streamUrl: "https://icecast.skyrock.net/s/natio_aac_96k",
         localImage: "skyrock.png",
-        countryName: "frança",
-        countryFlag: "fr.png" // imagem da bandeira da Espanha
+        countryName: "França",
+        countryFlag: "fr.png"
       },
       {
         name: "NRJ",
         streamUrl: "https://streaming.nrjaudio.fm/oumvmk8fnozc?origine=radio.net",
         localImage: "nrj.png",
-        countryName: "frança",
-        countryFlag: "fr.png" // imagem da bandeira da Espanha
+        countryName: "França",
+        countryFlag: "fr.png"
       },
       {
         name: "RIRE & CHANSONS",
         streamUrl: "https://streaming.nrjaudio.fm/ou8o8xgk7oiu?origine=radio.net",
         localImage: "rir.png",
-        countryName: "frança",
-        countryFlag: "fr.png" // imagem da bandeira da Espanha
-      },
-      
-      
+        countryName: "França",
+        countryFlag: "fr.png"
+      }
     ];
 
     const mainContainer = document.getElementById('mainContainer');
@@ -509,6 +507,9 @@
       // Renderiza cada grupo de país
       Object.keys(groups).forEach(countryName => {
         const group = groups[countryName];
+
+        // Ordena as rádios em ordem alfabética dentro do país
+        group.items.sort((a, b) => a.name.localeCompare(b.name));
 
         const section = document.createElement('section');
         section.className = 'country-section';
