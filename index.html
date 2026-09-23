@@ -33,7 +33,7 @@
       overflow-x: hidden;
     }
 
-    /* Fundo dinâmico com ondas visíveis por toda a tela */
+    /* Fundo dinâmico com ondas */
     .bg-waves {
       position: fixed;
       top: 0;
@@ -105,72 +105,178 @@
       backdrop-filter: blur(8px);
       border-bottom: 2px solid var(--primary);
       box-shadow: 0 0 20px var(--primary-glow);
-      padding: 1rem 0.8rem;
+      padding: 0.8rem;
       text-align: center;
-    }
-
-    .header-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
     }
 
     .header-logo {
       width: 100%;
-      max-width: 380px;
+      max-width: 340px;
       height: auto;
       object-fit: contain;
       filter: drop-shadow(0 0 10px rgba(0, 255, 102, 0.3));
     }
 
-    /* Player Fixo */
+    /* BARRA DO PLAYER DE FITA CASSETE */
     .player-bar {
       position: sticky;
       top: 0;
-      background: rgba(2, 8, 5, 0.55);
+      background: rgba(2, 8, 5, 0.85);
       backdrop-filter: blur(12px);
       border-bottom: 2px solid var(--primary);
-      padding: 0.6rem 1rem;
+      padding: 0.8rem 1rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 5px 20px rgba(0, 255, 102, 0.2);
+      justify-content: center;
+      box-shadow: 0 5px 20px rgba(0, 255, 102, 0.25);
       z-index: 100;
     }
 
-    .player-info {
+    .cassette-player-container {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-    }
-
-    .player-info img {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      border: 1.5px solid var(--secondary);
-      box-shadow: 0 0 8px var(--secondary-glow);
-      object-fit: cover;
-    }
-
-    .player-info h4 {
-      color: var(--secondary);
-      font-size: 0.85rem;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .player-info small {
-      font-size: 0.7rem;
-      color: var(--primary);
-    }
-
-    audio {
-      max-width: 320px;
+      gap: 1.5rem;
+      max-width: 600px;
       width: 100%;
-      height: 34px;
-      filter: invert(1) hue-rotate(90deg) drop-shadow(0 0 4px var(--primary));
+      justify-content: center;
+    }
+
+    /* ESTRUTURA DA FITA CASSETE */
+    .cassette-deck {
+      position: relative;
+      width: 250px;
+      height: 155px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8), 0 0 12px rgba(0, 255, 102, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #000;
+      flex-shrink: 0;
+    }
+
+    .cassette-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* NOME DA RÁDIO ESCROTO NA ETIQUETA DA FITA */
+    .cassette-label-text {
+      position: absolute;
+      top: 14px;
+      left: 55px;
+      width: 175px;
+      height: 24px;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      font-size: 0.75rem;
+      color: #111;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      pointer-events: none;
+      letter-spacing: 0.5px;
+    }
+
+    /* ROLDANAS GIRATÓRIAS NOS FUROS DA FITA */
+    .reel {
+      position: absolute;
+      top: 50.5px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 3px dashed #1a1a1a;
+      background: radial-gradient(circle, #fff 20%, transparent 25%);
+      box-sizing: border-box;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    .reel-left {
+      left: 64px;
+    }
+
+    .reel-right {
+      right: 64px;
+    }
+
+    /* ANIMAÇÃO DE GIRO DAS ROLDANAS */
+    .playing .reel {
+      animation: spinReel 2s linear infinite;
+    }
+
+    @keyframes spinReel {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* JANELA CENTRAL ILUMINADA QUANDO TOCA */
+    .tape-window-glow {
+      position: absolute;
+      top: 48px;
+      left: 55px;
+      width: 140px;
+      height: 38px;
+      background: rgba(0, 255, 102, 0);
+      pointer-events: none;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .playing .tape-window-glow {
+      background: rgba(0, 255, 102, 0.12);
+      box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.5);
+    }
+
+    /* CONTROLES E STATUS AO LADO DA FITA */
+    .player-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      align-items: flex-start;
+    }
+
+    .status-badge {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+    }
+
+    /* BOTÃO PLAY/PAUSE METALIZADO ESTILO TAPE DECK */
+    .deck-btn {
+      background: linear-gradient(135deg, #e6e6e6 0%, #888888 45%, #ffffff 50%, #444444 80%, #aaaaaa 100%);
+      border: none;
+      outline: none;
+      color: #111;
+      font-weight: bold;
+      font-size: 0.85rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.8);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.15s ease;
+    }
+
+    .deck-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.8), inset 0 2px 4px rgba(0,0,0,0.6);
+    }
+
+    .deck-btn.is-playing {
+      background: linear-gradient(135deg, var(--primary) 0%, #009933 100%);
+      color: #000;
+      box-shadow: 0 0 15px var(--primary-glow);
     }
 
     main {
@@ -211,7 +317,7 @@
       gap: 1.5rem 1rem;
     }
 
-    /* CONTAINER DO BOTÃO E NOME (SEM BORDA OU CAIXA QUADRADA) */
+    /* CONTAINER DO BOTÃO CIRCULAR DE SELEÇÃO */
     .radio-item {
       background: transparent;
       border: none;
@@ -224,7 +330,6 @@
       justify-content: flex-start;
     }
 
-    /* BOTÃO CIRCULAR METALIZADO REALISTA 3D */
     .realistic-btn {
       width: 90px;
       height: 90px;
@@ -235,21 +340,17 @@
       position: relative;
       margin-bottom: 0.6rem;
       padding: 6px;
-      
-      /* Gradiente Prata Metálico Cromado com Sombras 3D */
       background: linear-gradient(135deg, #e6e6e6 0%, #888888 45%, #ffffff 50%, #444444 80%, #aaaaaa 100%);
       box-shadow: 
         0 6px 14px rgba(0, 0, 0, 0.75),
         inset 0 2px 3px rgba(255, 255, 255, 0.8),
         inset 0 -3px 5px rgba(0, 0, 0, 0.6);
-      
       transition: transform 0.15s ease, box-shadow 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* Bisel Interno Secundário */
     .realistic-btn::before {
       content: '';
       position: absolute;
@@ -263,7 +364,6 @@
       box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
     }
 
-    /* Imagem da Rádio dentro do Botão */
     .realistic-btn img {
       width: 100%;
       height: 100%;
@@ -272,10 +372,8 @@
       position: relative;
       z-index: 2;
       box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
-      transition: filter 0.3s ease;
     }
 
-    /* Efeito de Reflexo de Vidro/Lente Curva */
     .realistic-btn::after {
       content: '';
       position: absolute;
@@ -289,32 +387,16 @@
       pointer-events: none;
     }
 
-    /* Efeito ao Passar o Mouse */
     .realistic-btn:hover {
       transform: scale(1.06);
-      box-shadow: 
-        0 8px 18px rgba(0, 255, 102, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.9),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 8px 18px rgba(0, 255, 102, 0.4);
     }
 
-    /* Efeito ao Pressionar o Botão (Clique) */
-    .realistic-btn:active {
-      transform: scale(0.95) translateY(2px);
-      box-shadow: 
-        0 2px 5px rgba(0, 0, 0, 0.8),
-        inset 0 3px 6px rgba(0, 0, 0, 0.9);
-    }
-
-    /* Estilo do Botão quando a Rádio está Tocando */
     .radio-item.active .realistic-btn {
       background: linear-gradient(135deg, var(--primary) 0%, #008833 50%, var(--primary) 100%);
-      box-shadow: 
-        0 0 20px var(--primary-glow),
-        0 4px 10px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 0 20px var(--primary-glow);
     }
 
-    /* Nome da Rádio Embaixo do Botão */
     .radio-item h3 {
       font-size: 0.8rem;
       color: var(--text);
@@ -328,7 +410,6 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
       margin: 0;
-      transition: color 0.3s ease;
     }
 
     .radio-item.active h3 {
@@ -338,11 +419,11 @@
 
     .playing-pulse {
       display: inline-block;
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       background-color: var(--primary);
       border-radius: 50%;
-      margin-right: 4px;
+      margin-right: 6px;
       box-shadow: 0 0 6px var(--primary);
       animation: pulse 1.2s infinite alternate;
     }
@@ -353,9 +434,13 @@
     }
 
     @media (max-width: 600px) {
-      .header-logo {
-        width: 90%;
-        max-width: 320px;
+      .cassette-player-container {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .player-controls {
+        align-items: center;
       }
 
       .grid-radios {
@@ -366,21 +451,6 @@
       .realistic-btn {
         width: 75px;
         height: 75px;
-      }
-
-      .radio-item h3 {
-        font-size: 0.72rem;
-      }
-
-      .player-bar {
-        flex-direction: column;
-        gap: 6px;
-        padding: 0.5rem;
-      }
-
-      audio {
-        max-width: 100%;
-        height: 30px;
       }
     }
   </style>
@@ -399,16 +469,32 @@
     </div>
   </header>
 
+  <!-- PLAYER EM FORMATO DE FITA CASSETE -->
   <div class="player-bar">
-    <div class="player-info">
-      <img id="currentLogo" src="logodj11.png" alt="Logo">
-      <div>
-        <h4 id="currentTitle">Nenhuma rádio selecionada</h4>
-        <small id="status" style="color: var(--text-muted)">Aguardando seleção</small>
+    <div class="cassette-player-container">
+      
+      <!-- FITA CASSETE -->
+      <div class="cassette-deck" id="cassetteDeck">
+        <img src="fita.png" alt="Fita Cassete" class="cassette-img">
+        <div class="cassette-label-text" id="currentTitle">Nenhuma rádio</div>
+        <div class="reel reel-left"></div>
+        <div class="reel reel-right"></div>
+        <div class="tape-window-glow"></div>
       </div>
+
+      <!-- CONTROLES DO TAPE DECK -->
+      <div class="player-controls">
+        <div class="status-badge" id="status">Aguardando seleção</div>
+        <button class="deck-btn" id="playToggleBtn" onclick="togglePlay()">
+          <span id="btnIcon">&#9654;</span> <span id="btnText">PLAY</span>
+        </button>
+      </div>
+
     </div>
-    <audio id="audioPlayer" controls autoplay></audio>
   </div>
+
+  <!-- ELEMENTO AUDIO OCULTO QUE FAZ O STREAMING -->
+  <audio id="audioPlayer" autoplay></audio>
 
   <main id="mainContainer"></main>
 
@@ -594,8 +680,11 @@
     const mainContainer = document.getElementById('mainContainer');
     const audioPlayer = document.getElementById('audioPlayer');
     const currentTitle = document.getElementById('currentTitle');
-    const currentLogo = document.getElementById('currentLogo');
     const statusText = document.getElementById('status');
+    const cassetteDeck = document.getElementById('cassetteDeck');
+    const playToggleBtn = document.getElementById('playToggleBtn');
+    const btnIcon = document.getElementById('btnIcon');
+    const btnText = document.getElementById('btnText');
 
     function renderRadios() {
       mainContainer.innerHTML = '';
@@ -643,7 +732,7 @@
           const safeName = radio.name.replace(/'/g, "\\'");
 
           item.innerHTML = `
-            <button class="realistic-btn" onclick="playRadio(this, '${radio.streamUrl}', '${safeName}', '${radio.localImage}')" title="Tocar ${radio.name}">
+            <button class="realistic-btn" onclick="playRadio(this, '${radio.streamUrl}', '${safeName}')" title="Tocar ${radio.name}">
               <img src="${radio.localImage}" alt="${radio.name}" onerror="this.src='logodj.jpg'">
             </button>
             <h3>${radio.name}</h3>
@@ -658,16 +747,40 @@
       });
     }
 
-    function playRadio(buttonElement, url, name, logo) {
+    function playRadio(buttonElement, url, name) {
       document.querySelectorAll('.radio-item').forEach(item => item.classList.remove('active'));
-      
       buttonElement.parentElement.classList.add('active');
 
       audioPlayer.src = url;
       audioPlayer.play();
+      
       currentTitle.innerText = name;
-      currentLogo.src = logo;
-      statusText.innerHTML = `<span class="playing-pulse"></span> Tocando Online`;
+      statusText.innerHTML = `<span class="playing-pulse"></span> TOCANDO FITA`;
+      
+      cassetteDeck.classList.add('playing');
+      playToggleBtn.classList.add('is-playing');
+      btnIcon.innerHTML = '&#10074;&#10074;';
+      btnText.innerText = 'PAUSE';
+    }
+
+    function togglePlay() {
+      if (!audioPlayer.src) return;
+
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        cassetteDeck.classList.add('playing');
+        playToggleBtn.classList.add('is-playing');
+        btnIcon.innerHTML = '&#10074;&#10074;';
+        btnText.innerText = 'PAUSE';
+        statusText.innerHTML = `<span class="playing-pulse"></span> TOCANDO FITA`;
+      } else {
+        audioPlayer.pause();
+        cassetteDeck.classList.remove('playing');
+        playToggleBtn.classList.remove('is-playing');
+        btnIcon.innerHTML = '&#9654;';
+        btnText.innerText = 'PLAY';
+        statusText.innerText = 'PAUSADO';
+      }
     }
 
     renderRadios();
