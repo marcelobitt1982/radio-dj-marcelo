@@ -635,7 +635,7 @@
           card.innerHTML = `
             <img src="${radio.localImage}" alt="${radio.name}" onerror="this.src='logodj.jpg'">
             <h3>${radio.name}</h3>
-            <button class="btn-play" onclick="playRadio('${radio.streamUrl}', '${radio.name.replace(/'/g, "\\'")}', '${radio.localImage}')">Ouvir</button>
+            <button class="btn-play" onclick="playRadio('${radio.streamUrl}', '${radio.name.replace(/'/g, "\\'")}', '${radio.localImage}')">PLAY &#9654;</button>
           `;
 
           radioGrid.appendChild(card);
