@@ -141,7 +141,7 @@
       max-width: 500px;
     }
 
-    /* BARRAS DE LED (VU METER) */
+    /* BARRAS DE LED (VU METER) DE BAIXO PARA CIMA */
     .vu-meter-tower {
       width: 18px;
       height: 125px;
@@ -150,7 +150,7 @@
       border-radius: 4px;
       padding: 2px;
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: column-reverse; /* Força os blocos a acumularem de baixo para cima */
       gap: 2px;
       box-shadow: inset 0 0 5px #000, 0 0 8px rgba(0,0,0,0.8);
       flex-shrink: 0;
@@ -160,26 +160,26 @@
       width: 100%;
       height: 5px;
       border-radius: 1px;
-      background-color: #1a221d;
+      background-color: #111a14;
       transition: background-color 0.08s ease, box-shadow 0.08s ease;
     }
 
-    /* Cores das barras ativas */
-    .playing .led-block.active.red {
-      background-color: #ff2a2a;
-      box-shadow: 0 0 4px #ff2a2a;
-    }
-    .playing .led-block.active.orange {
-      background-color: #ff9900;
-      box-shadow: 0 0 4px #ff9900;
+    /* Cores das luzes acesas (da base até o topo: Verde -> Amarelo -> Vermelho -> Azul) */
+    .playing .led-block.active.green {
+      background-color: #00ff66;
+      box-shadow: 0 0 4px #00ff66;
     }
     .playing .led-block.active.yellow {
       background-color: #ffe600;
       box-shadow: 0 0 4px #ffe600;
     }
-    .playing .led-block.active.green {
-      background-color: #00ff66;
-      box-shadow: 0 0 4px #00ff66;
+    .playing .led-block.active.orange {
+      background-color: #ff9900;
+      box-shadow: 0 0 4px #ff9900;
+    }
+    .playing .led-block.active.red {
+      background-color: #ff2a2a;
+      box-shadow: 0 0 4px #ff2a2a;
     }
     .playing .led-block.active.blue {
       background-color: #0099ff;
@@ -625,12 +625,20 @@
     const totalLeds = 14;
     let vuInterval = null;
 
-    // Criar blocos de LED para cada barra
+    // Criar blocos de LED de baixo para cima: VERDE -> AMARELO -> LARANJA -> VERMELHO -> AZUL
     function buildVuMeters() {
-      const colors = ['red', 'red', 'orange', 'orange', 'yellow', 'yellow', 'green', 'green', 'green', 'green', 'blue', 'blue', 'blue', 'blue'];
+      const colors = [
+        'green', 'green', 'green', 'green', 'green',  // Base (Verde)
+        'yellow', 'yellow', 'yellow',                 // Meio (Amarelo)
+        'orange', 'orange',                           // Transição (Laranja)
+        'red', 'red',                                 // Alto (Vermelho)
+        'blue', 'blue'                                // Pico (Azul)
+      ];
+
       [vuLeft, vuRight].forEach(container => {
         container.innerHTML = '';
-        for (let i = totalLeds - 1; i >= 0; i--) {
+        // Inserção do índice 0 ao último para preencher a torre de baixo para cima
+        for (let i = 0; i < totalLeds; i++) {
           const led = document.createElement('div');
           led.className = `led-block ${colors[i]}`;
           container.appendChild(led);
@@ -638,7 +646,7 @@
       });
     }
 
-    // Animação dinâmica das luzes das barras quando a música toca
+    // Animação dinâmica do VU Meter acendendo a partir da base
     function startVuMeter() {
       stopVuMeter();
       vuInterval = setInterval(() => {
@@ -657,7 +665,7 @@
     }
 
     function updateBar(container, level) {
-      const leds = Array.from(container.children).reverse();
+      const leds = Array.from(container.children);
       leds.forEach((led, index) => {
         if (index < level) {
           led.classList.add('active');
