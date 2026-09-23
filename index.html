@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -565,7 +565,7 @@
         </div>
 
         <div class="player-controls">
-          <div class="status-badge" id="status">Aguardando</div>
+          <div class="status-badge" id="status">EN ATTENTE</div>
           <button class="deck-btn" id="playToggleBtn" onclick="togglePlay()">
             <span id="btnIcon">&#9654;</span> <span id="btnText">PLAY</span>
           </button>
@@ -597,6 +597,7 @@
       { name: "FLASH DISCO DANCE", streamUrl: "https://stm1.srvif.com:21764/stream?1789923017551", localImage: "fdd.png", countryName: "Brasil", countryFlag: "br.png" },
       { name: "RADIO GALICIA", streamUrl: "https://srv6022.dns-lcinternet.com:8059/live", localImage: "galicia.png", countryName: "Espanha", countryFlag: "es.png" },
       { name: "BLUE MARLIN IBIZA", streamUrl: "https://ibizasonica.streaming-pro.com:8001/bluemarlin", localImage: "blue.png", countryName: "Espanha", countryFlag: "es.png" },
+      { name: "los 40", streamUrl: "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_CLASSICAAC.aac", localImage: "los40.png", countryName: "Espanha", countryFlag: "es.png" },
       { name: "IBIZA GLOBAL", streamUrl: "https://listenssl.ibizaglobalradio.com:8024/stream", localImage: "ibiza.png", countryName: "Espanha", countryFlag: "es.png" },
       { name: "MUSIQUE CLASSIQUE", streamUrl: "https://icecast.radiofrance.fr/francemusique-hifi.aac", localImage: "classique.png", countryName: "França", countryFlag: "fr.png" },
       { name: "RADIO LATINA", streamUrl: "https://start-latina.ice.infomaniak.ch/start-latina-high.mp3", localImage: "rlatina.png", countryName: "França", countryFlag: "fr.png" },
@@ -608,7 +609,10 @@
       { name: "Tomorrowland - One World", streamUrl: "https://playerservices.streamtheworld.com/api/livestream-redirect/OWR_INTERNATIONAL_ADP.aac", localImage: "tomorrowland.png", countryName: "djs", countryFlag: "djs.png" },
       { name: "FG MIX TRANCE", streamUrl: "https://stream.rcs.revma.com/v025nezpey3vv.mp3", localImage: "fg.png", countryName: "djs", countryFlag: "djs.png" },
       { name: "dj zeno", streamUrl: "https://stream.zeno.fm/k9gy85cgwy8uv?1789917104132", localImage: "djzeno.png", countryName: "djs", countryFlag: "djs.png" },
-      { name: "dj buzz", streamUrl: "https://stream.initialradio.fr:8443/djbuzz-192k.mp3", localImage: "djbuzz.png", countryName: "djs", countryFlag: "djs.png" }
+      { name: "dj buzz", streamUrl: "https://stream.initialradio.fr:8443/djbuzz-192k.mp3", localImage: "djbuzz.png", countryName: "djs", countryFlag: "djs.png" },
+      { name: "JAZZ & SOUL", streamUrl: "https://jazzradio.ice.infomaniak.ch/jazzradio-high.aac?aw_0_1st.playerId=jazzradio_web", localImage: "jazz.png", countryName: "França", countryFlag: "fr.png" },
+      { name: "flor fm", streamUrl: "https://florfm.ice.infomaniak.ch/webcolmar.mp3", localImage: "flor.png", countryName: "França", countryFlag: "fr.png" },
+      { name: "Bossa Nova", streamUrl: "https://radio2.vip-radios.fm:18009/stream-128kmp3-BossaNovaBrazil", localImage: "bossa.png", countryName: "Brasil", countryFlag: "br.png" }
     ];
 
     const mainContainer = document.getElementById('mainContainer');
@@ -740,7 +744,7 @@
       audioPlayer.play();
       
       currentTitle.innerText = name;
-      statusText.innerHTML = `<span class="playing-pulse"></span> TOCANDO FITA`;
+      statusText.innerHTML = `<span class="playing-pulse"></span> Lecture de la cassette`;
       
       playerBarContainer.classList.add('playing');
       playToggleBtn.classList.add('is-playing');
