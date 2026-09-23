@@ -111,7 +111,7 @@
 
     .header-logo {
       width: 100%;
-      max-width: 340px;
+      max-width: 300px;
       height: auto;
       object-fit: contain;
       filter: drop-shadow(0 0 10px rgba(0, 255, 102, 0.3));
@@ -121,10 +121,10 @@
     .player-bar {
       position: sticky;
       top: 0;
-      background: rgba(2, 8, 5, 0.85);
+      background: rgba(2, 8, 5, 0.92);
       backdrop-filter: blur(12px);
       border-bottom: 2px solid var(--primary);
-      padding: 0.8rem 1rem;
+      padding: 0.6rem 0.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -135,21 +135,77 @@
     .cassette-player-container {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
-      max-width: 600px;
-      width: 100%;
       justify-content: center;
+      gap: 0.6rem;
+      width: 100%;
+      max-width: 500px;
     }
 
-    /* ESTRUTURA DA FITA CASSETE */
+    /* BARRAS DE LED (VU METER) */
+    .vu-meter-tower {
+      width: 18px;
+      height: 125px;
+      background: #080d0a;
+      border: 1px solid rgba(0, 255, 102, 0.3);
+      border-radius: 4px;
+      padding: 2px;
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 2px;
+      box-shadow: inset 0 0 5px #000, 0 0 8px rgba(0,0,0,0.8);
+      flex-shrink: 0;
+    }
+
+    .led-block {
+      width: 100%;
+      height: 5px;
+      border-radius: 1px;
+      background-color: #1a221d;
+      transition: background-color 0.08s ease, box-shadow 0.08s ease;
+    }
+
+    /* Cores das barras ativas */
+    .playing .led-block.active.red {
+      background-color: #ff2a2a;
+      box-shadow: 0 0 4px #ff2a2a;
+    }
+    .playing .led-block.active.orange {
+      background-color: #ff9900;
+      box-shadow: 0 0 4px #ff9900;
+    }
+    .playing .led-block.active.yellow {
+      background-color: #ffe600;
+      box-shadow: 0 0 4px #ffe600;
+    }
+    .playing .led-block.active.green {
+      background-color: #00ff66;
+      box-shadow: 0 0 4px #00ff66;
+    }
+    .playing .led-block.active.blue {
+      background-color: #0099ff;
+      box-shadow: 0 0 4px #0099ff;
+    }
+
+    /* CONTAINER DA FITA E CONTROLES NO CENTRO */
+    .deck-center-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(0,0,0,0.5);
+      padding: 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* ESTRUTURA DA FITA CASSETE (AJUSTADA PARA MOBILE) */
     .cassette-deck {
       position: relative;
-      width: 250px;
-      height: 155px;
-      border-radius: 8px;
+      width: 180px;
+      height: 115px;
+      border-radius: 6px;
       overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8), 0 0 12px rgba(0, 255, 102, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 255, 102, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       background: #000;
       flex-shrink: 0;
     }
@@ -161,16 +217,16 @@
       display: block;
     }
 
-    /* NOME DA RÁDIO ESCROTO NA ETIQUETA DA FITA */
+    /* ETIQUETA DA FITA */
     .cassette-label-text {
       position: absolute;
-      top: 14px;
-      left: 55px;
-      width: 175px;
-      height: 24px;
+      top: 10px;
+      left: 38px;
+      width: 130px;
+      height: 18px;
       font-family: 'Courier New', Courier, monospace;
       font-weight: bold;
-      font-size: 0.75rem;
+      font-size: 0.65rem;
       color: #111;
       display: flex;
       align-items: center;
@@ -178,32 +234,25 @@
       overflow: hidden;
       text-overflow: ellipsis;
       pointer-events: none;
-      letter-spacing: 0.5px;
     }
 
-    /* ROLDANAS GIRATÓRIAS NOS FUROS DA FITA */
+    /* ROLDANAS GIRATÓRIAS */
     .reel {
       position: absolute;
-      top: 50.5px;
-      width: 32px;
-      height: 32px;
+      top: 37px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      border: 3px dashed #1a1a1a;
+      border: 2px dashed #1a1a1a;
       background: radial-gradient(circle, #fff 20%, transparent 25%);
       box-sizing: border-box;
       pointer-events: none;
       opacity: 0.85;
     }
 
-    .reel-left {
-      left: 64px;
-    }
+    .reel-left { left: 45px; }
+    .reel-right { right: 45px; }
 
-    .reel-right {
-      right: 64px;
-    }
-
-    /* ANIMAÇÃO DE GIRO DAS ROLDANAS */
     .playing .reel {
       animation: spinReel 2s linear infinite;
     }
@@ -213,70 +262,69 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* JANELA CENTRAL ILUMINADA QUANDO TOCA */
     .tape-window-glow {
       position: absolute;
-      top: 48px;
-      left: 55px;
-      width: 140px;
-      height: 38px;
+      top: 35px;
+      left: 40px;
+      width: 100px;
+      height: 28px;
       background: rgba(0, 255, 102, 0);
       pointer-events: none;
       transition: background 0.3s ease, box-shadow 0.3s ease;
-      border-radius: 4px;
+      border-radius: 3px;
     }
 
     .playing .tape-window-glow {
-      background: rgba(0, 255, 102, 0.12);
-      box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.5);
+      background: rgba(0, 255, 102, 0.15);
+      box-shadow: inset 0 0 8px rgba(0, 255, 102, 0.6);
     }
 
-    /* CONTROLES E STATUS AO LADO DA FITA */
+    /* CONTROLES E STATUS */
     .player-controls {
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.5rem;
       align-items: flex-start;
     }
 
     .status-badge {
-      font-size: 0.75rem;
+      font-size: 0.65rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       color: var(--text-muted);
       display: flex;
       align-items: center;
+      white-space: nowrap;
     }
 
-    /* BOTÃO PLAY/PAUSE METALIZADO ESTILO TAPE DECK */
     .deck-btn {
       background: linear-gradient(135deg, #e6e6e6 0%, #888888 45%, #ffffff 50%, #444444 80%, #aaaaaa 100%);
       border: none;
       outline: none;
       color: #111;
       font-weight: bold;
-      font-size: 0.85rem;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
+      font-size: 0.75rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 5px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.8);
+      gap: 6px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.8);
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       transition: all 0.15s ease;
     }
 
     .deck-btn:active {
       transform: translateY(2px);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.8), inset 0 2px 4px rgba(0,0,0,0.6);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.8);
     }
 
     .deck-btn.is-playing {
       background: linear-gradient(135deg, var(--primary) 0%, #009933 100%);
       color: #000;
-      box-shadow: 0 0 15px var(--primary-glow);
+      box-shadow: 0 0 12px var(--primary-glow);
     }
 
     main {
@@ -313,36 +361,33 @@
 
     .grid-radios {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 1.5rem 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 1.2rem 0.8rem;
     }
 
-    /* CONTAINER DO BOTÃO CIRCULAR DE SELEÇÃO */
     .radio-item {
       background: transparent;
       border: none;
-      box-shadow: none;
       padding: 0;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
     }
 
     .realistic-btn {
-      width: 90px;
-      height: 90px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       border: none;
       outline: none;
       cursor: pointer;
       position: relative;
-      margin-bottom: 0.6rem;
-      padding: 6px;
+      margin-bottom: 0.5rem;
+      padding: 5px;
       background: linear-gradient(135deg, #e6e6e6 0%, #888888 45%, #ffffff 50%, #444444 80%, #aaaaaa 100%);
       box-shadow: 
-        0 6px 14px rgba(0, 0, 0, 0.75),
+        0 5px 12px rgba(0, 0, 0, 0.75),
         inset 0 2px 3px rgba(255, 255, 255, 0.8),
         inset 0 -3px 5px rgba(0, 0, 0, 0.6);
       transition: transform 0.15s ease, box-shadow 0.2s ease;
@@ -354,10 +399,7 @@
     .realistic-btn::before {
       content: '';
       position: absolute;
-      top: 4px;
-      left: 4px;
-      right: 4px;
-      bottom: 4px;
+      top: 4px; left: 4px; right: 4px; bottom: 4px;
       border-radius: 50%;
       background: linear-gradient(180deg, #222 0%, #555 100%);
       z-index: 1;
@@ -371,14 +413,13 @@
       object-fit: cover;
       position: relative;
       z-index: 2;
-      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
     }
 
     .realistic-btn::after {
       content: '';
       position: absolute;
-      top: 6px;
-      left: 13px;
+      top: 5px;
+      left: 11px;
       width: 70%;
       height: 35%;
       border-radius: 50px 50px 0 0;
@@ -388,23 +429,23 @@
     }
 
     .realistic-btn:hover {
-      transform: scale(1.06);
-      box-shadow: 0 8px 18px rgba(0, 255, 102, 0.4);
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0, 255, 102, 0.4);
     }
 
     .radio-item.active .realistic-btn {
       background: linear-gradient(135deg, var(--primary) 0%, #008833 50%, var(--primary) 100%);
-      box-shadow: 0 0 20px var(--primary-glow);
+      box-shadow: 0 0 18px var(--primary-glow);
     }
 
     .radio-item h3 {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       font-weight: 600;
-      line-height: 1.25;
-      height: 2.5em;
+      line-height: 1.2;
+      height: 2.4em;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -419,11 +460,11 @@
 
     .playing-pulse {
       display: inline-block;
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       background-color: var(--primary);
       border-radius: 50%;
-      margin-right: 6px;
+      margin-right: 5px;
       box-shadow: 0 0 6px var(--primary);
       animation: pulse 1.2s infinite alternate;
     }
@@ -433,24 +474,61 @@
       100% { opacity: 1; transform: scale(1.3); }
     }
 
-    @media (max-width: 600px) {
+    /* OTIMIZAÇÃO PARA ECRÃS DE TELEMÓVEL PEQUENOS */
+    @media (max-width: 480px) {
       .cassette-player-container {
-        flex-direction: column;
-        gap: 0.8rem;
+        gap: 0.3rem;
       }
 
-      .player-controls {
-        align-items: center;
+      .cassette-deck {
+        width: 145px;
+        height: 95px;
+      }
+
+      .cassette-label-text {
+        top: 8px;
+        left: 30px;
+        width: 105px;
+        font-size: 0.55rem;
+      }
+
+      .reel {
+        top: 30px;
+        width: 20px;
+        height: 20px;
+      }
+      .reel-left { left: 36px; }
+      .reel-right { right: 36px; }
+
+      .tape-window-glow {
+        top: 28px;
+        left: 32px;
+        width: 80px;
+        height: 22px;
+      }
+
+      .vu-meter-tower {
+        width: 14px;
+        height: 100px;
+        gap: 1.5px;
+      }
+
+      .led-block {
+        height: 4px;
+      }
+
+      .deck-btn {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.7rem;
       }
 
       .grid-radios {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 1.2rem 0.6rem;
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
       }
 
       .realistic-btn {
-        width: 75px;
-        height: 75px;
+        width: 70px;
+        height: 70px;
       }
     }
   </style>
@@ -469,222 +547,125 @@
     </div>
   </header>
 
-  <!-- PLAYER EM FORMATO DE FITA CASSETE -->
+  <!-- PLAYER EM FORMATO DE FITA CASSETE COM BARRAS DE LED LATERAIS -->
   <div class="player-bar">
-    <div class="cassette-player-container">
+    <div class="cassette-player-container" id="playerBarContainer">
       
-      <!-- FITA CASSETE -->
-      <div class="cassette-deck" id="cassetteDeck">
-        <img src="fita.png" alt="Fita Cassete" class="cassette-img">
-        <div class="cassette-label-text" id="currentTitle">Nenhuma rádio</div>
-        <div class="reel reel-left"></div>
-        <div class="reel reel-right"></div>
-        <div class="tape-window-glow"></div>
+      <!-- BARRA DE LED ESQUERDA -->
+      <div class="vu-meter-tower" id="vuLeft"></div>
+
+      <!-- FITA CASSETE E CONTROLES -->
+      <div class="deck-center-wrapper">
+        <div class="cassette-deck" id="cassetteDeck">
+          <img src="fita.png" alt="Fita Cassete" class="cassette-img">
+          <div class="cassette-label-text" id="currentTitle">Nenhuma rádio</div>
+          <div class="reel reel-left"></div>
+          <div class="reel reel-right"></div>
+          <div class="tape-window-glow"></div>
+        </div>
+
+        <div class="player-controls">
+          <div class="status-badge" id="status">Aguardando</div>
+          <button class="deck-btn" id="playToggleBtn" onclick="togglePlay()">
+            <span id="btnIcon">&#9654;</span> <span id="btnText">PLAY</span>
+          </button>
+        </div>
       </div>
 
-      <!-- CONTROLES DO TAPE DECK -->
-      <div class="player-controls">
-        <div class="status-badge" id="status">Aguardando seleção</div>
-        <button class="deck-btn" id="playToggleBtn" onclick="togglePlay()">
-          <span id="btnIcon">&#9654;</span> <span id="btnText">PLAY</span>
-        </button>
-      </div>
+      <!-- BARRA DE LED DIREITA -->
+      <div class="vu-meter-tower" id="vuRight"></div>
 
     </div>
   </div>
 
-  <!-- ELEMENTO AUDIO OCULTO QUE FAZ O STREAMING -->
   <audio id="audioPlayer" autoplay></audio>
 
   <main id="mainContainer"></main>
 
   <script>
     const radios = [
-      {
-        name: "ROCK",
-        streamUrl: "https://stream.rockantenne.de/90er-rock/stream/mp3?aw_0_1st.playerid=radio.de",
-        localImage: "rock.png",
-        countryName: "Brasil",
-        countryFlag: "br.png"
-      },
-      {
-        name: "FORRO",
-        streamUrl: "https://stm5.xcast.com.br:10684/wfai?1789917171675",
-        localImage: "forro.png",
-        countryName: "Brasil",
-        countryFlag: "br.png"
-      },
-      {
-        name: "MODÃO",
-        streamUrl: "https://s22.maxcast.com.br:8034/live?17899172669343",
-        localImage: "modao.png",
-        countryName: "Brasil",
-        countryFlag: "br.png"
-      },
-      {
-        name: "SERTANEJO",
-        streamUrl: "https://centova5.transmissaodigital.com:20042/stream?1789917354447",
-        localImage: "sertanejo.png",
-        countryName: "Brasil",
-        countryFlag: "br.png"
-      },
-      {
-        name: "ROCK NACIONAL",
-        streamUrl: "https://stm1.painelvox.xyz:6696/steam?1789917407173",
-        localImage: "rocknac.png",
-        countryName: "Brasil",
-        countryFlag: "br.png"
-      },
-      {
-        name: "LATINA",
-        streamUrl: "https://server06.srvsh.com.br:8008/;?1789917491711",
-        localImage: "latina.png",
-        countryName: "Brasil",
-        countryFlag: "br.png"
-      },
-      {
-        name: "TECNO HOUSE",
-        streamUrl: "https://stream.zeno.fm/6c2d25gk5gruv?1789920022127",
-        localImage: "tecnohouse.png",
-        countryName: "Brasil",
-        countryFlag: "br.png"
-      },
-      {
-        name: "GOSPEL",
-        streamUrl: "https://stm11.xcast.com.br:10052/stream?1789920148018",
-        localImage: "gospel.png",
-        countryName: "Brasil",
-        countryFlag: "br.png"
-      },
-      {
-        name: "MPB",
-        streamUrl: "https://sv11.hdradios.net:8152/stream?1789922687905",
-        localImage: "mpb.png",
-        countryName: "Brasil",
-        countryFlag: "br.png"
-      },
-      {
-        name: "RADIO RIO VERMELHO",
-        streamUrl: "https://str1.streamhostpg.com.br:8030/stream",
-        localImage: "rrv.png",
-        countryName: "Brasil",
-        countryFlag: "br.png"
-      },
-      {
-        name: "FLASH DISCO DANCE",
-        streamUrl: "https://stm1.srvif.com:21764/stream?1789923017551",
-        localImage: "fdd.png",
-        countryName: "Brasil",
-        countryFlag: "br.png"
-      },
-      {
-        name: "RADIO GALICIA",
-        streamUrl: "https://srv6022.dns-lcinternet.com:8059/live",
-        localImage: "galicia.png",
-        countryName: "Espanha",
-        countryFlag: "es.png"
-      },
-      {
-        name: "BLUE MARLIN IBIZA",
-        streamUrl: "https://ibizasonica.streaming-pro.com:8001/bluemarlin",
-        localImage: "blue.png",
-        countryName: "Espanha",
-        countryFlag: "es.png"
-      },
-      {
-        name: "IBIZA GLOBAL",
-        streamUrl: "https://listenssl.ibizaglobalradio.com:8024/stream",
-        localImage: "ibiza.png",
-        countryName: "Espanha",
-        countryFlag: "es.png"
-      },
-      {
-        name: "MUSIQUE CLASSIQUE",
-        streamUrl: "https://icecast.radiofrance.fr/francemusique-hifi.aac",
-        localImage: "classique.png",
-        countryName: "França",
-        countryFlag: "fr.png"
-      },
-      {
-        name: "RADIO LATINA",
-        streamUrl: "https://start-latina.ice.infomaniak.ch/start-latina-high.mp3",
-        localImage: "rlatina.png",
-        countryName: "França",
-        countryFlag: "fr.png"
-      },
-      {
-        name: "RAP FR",
-        streamUrl: "https://generationfm-rap.ice.infomaniak.ch/generationfm-rap-high.mp3",
-        localImage: "rapfr.png",
-        countryName: "França",
-        countryFlag: "fr.png"
-      },
-      {
-        name: "SKYROCK",
-        streamUrl: "https://icecast.skyrock.net/s/natio_aac_96k",
-        localImage: "skyrock.png",
-        countryName: "França",
-        countryFlag: "fr.png"
-      },
-      {
-        name: "NRJ",
-        streamUrl: "https://streaming.nrjaudio.fm/oumvmk8fnozc?origine=radio.net",
-        localImage: "nrj.png",
-        countryName: "França",
-        countryFlag: "fr.png"
-      },
-      {
-        name: "RIRE & CHANSONS",
-        streamUrl: "https://streaming.nrjaudio.fm/ou8o8xgk7oiu?origine=radio.net",
-        localImage: "rir.png",
-        countryName: "França",
-        countryFlag: "fr.png"
-      },
-      {
-        name: "DJ SENRA",
-        streamUrl: "https://www.pacotedodj.com.br/radio/live-direct.mp3?v=1790090849",
-        localImage: "senra.png",
-        countryName: "djs",
-        countryFlag: "djs.png"
-      },
-      {
-        name: "Tomorrowland - One World ",
-        streamUrl: "https://playerservices.streamtheworld.com/api/livestream-redirect/OWR_INTERNATIONAL_ADP.aac",
-        localImage: "tomorrowland.png",
-        countryName: "djs",
-        countryFlag: "djs.png"
-      },
-      {
-        name: "FG MIX TRANCE",
-        streamUrl: "https://stream.rcs.revma.com/v025nezpey3vv.mp3",
-        localImage: "fg.png",
-        countryName: "djs",
-        countryFlag: "djs.png"
-      },
-      {
-        name: "dj zeno",
-        streamUrl: "https://stream.zeno.fm/k9gy85cgwy8uv?1789917104132",
-        localImage: "djzeno.png",
-        countryName: "djs",
-        countryFlag: "djs.png"
-      },
-      {
-        name: "dj buzz",
-        streamUrl: "https://stream.initialradio.fr:8443/djbuzz-192k.mp3",
-        localImage: "djbuzz.png",
-        countryName: "djs",
-        countryFlag: "djs.png"
-      }
+      { name: "ROCK", streamUrl: "https://stream.rockantenne.de/90er-rock/stream/mp3?aw_0_1st.playerid=radio.de", localImage: "rock.png", countryName: "Brasil", countryFlag: "br.png" },
+      { name: "FORRO", streamUrl: "https://stm5.xcast.com.br:10684/wfai?1789917171675", localImage: "forro.png", countryName: "Brasil", countryFlag: "br.png" },
+      { name: "MODÃO", streamUrl: "https://s22.maxcast.com.br:8034/live?17899172669343", localImage: "modao.png", countryName: "Brasil", countryFlag: "br.png" },
+      { name: "SERTANEJO", streamUrl: "https://centova5.transmissaodigital.com:20042/stream?1789917354447", localImage: "sertanejo.png", countryName: "Brasil", countryFlag: "br.png" },
+      { name: "ROCK NACIONAL", streamUrl: "https://stm1.painelvox.xyz:6696/steam?1789917407173", localImage: "rocknac.png", countryName: "Brasil", countryFlag: "br.png" },
+      { name: "LATINA", streamUrl: "https://server06.srvsh.com.br:8008/;?1789917491711", localImage: "latina.png", countryName: "Brasil", countryFlag: "br.png" },
+      { name: "TECNO HOUSE", streamUrl: "https://stream.zeno.fm/6c2d25gk5gruv?1789920022127", localImage: "tecnohouse.png", countryName: "Brasil", countryFlag: "br.png" },
+      { name: "GOSPEL", streamUrl: "https://stm11.xcast.com.br:10052/stream?1789920148018", localImage: "gospel.png", countryName: "Brasil", countryFlag: "br.png" },
+      { name: "MPB", streamUrl: "https://sv11.hdradios.net:8152/stream?1789922687905", localImage: "mpb.png", countryName: "Brasil", countryFlag: "br.png" },
+      { name: "RADIO RIO VERMELHO", streamUrl: "https://str1.streamhostpg.com.br:8030/stream", localImage: "rrv.png", countryName: "Brasil", countryFlag: "br.png" },
+      { name: "FLASH DISCO DANCE", streamUrl: "https://stm1.srvif.com:21764/stream?1789923017551", localImage: "fdd.png", countryName: "Brasil", countryFlag: "br.png" },
+      { name: "RADIO GALICIA", streamUrl: "https://srv6022.dns-lcinternet.com:8059/live", localImage: "galicia.png", countryName: "Espanha", countryFlag: "es.png" },
+      { name: "BLUE MARLIN IBIZA", streamUrl: "https://ibizasonica.streaming-pro.com:8001/bluemarlin", localImage: "blue.png", countryName: "Espanha", countryFlag: "es.png" },
+      { name: "IBIZA GLOBAL", streamUrl: "https://listenssl.ibizaglobalradio.com:8024/stream", localImage: "ibiza.png", countryName: "Espanha", countryFlag: "es.png" },
+      { name: "MUSIQUE CLASSIQUE", streamUrl: "https://icecast.radiofrance.fr/francemusique-hifi.aac", localImage: "classique.png", countryName: "França", countryFlag: "fr.png" },
+      { name: "RADIO LATINA", streamUrl: "https://start-latina.ice.infomaniak.ch/start-latina-high.mp3", localImage: "rlatina.png", countryName: "França", countryFlag: "fr.png" },
+      { name: "RAP FR", streamUrl: "https://generationfm-rap.ice.infomaniak.ch/generationfm-rap-high.mp3", localImage: "rapfr.png", countryName: "França", countryFlag: "fr.png" },
+      { name: "SKYROCK", streamUrl: "https://icecast.skyrock.net/s/natio_aac_96k", localImage: "skyrock.png", countryName: "França", countryFlag: "fr.png" },
+      { name: "NRJ", streamUrl: "https://streaming.nrjaudio.fm/oumvmk8fnozc?origine=radio.net", localImage: "nrj.png", countryName: "França", countryFlag: "fr.png" },
+      { name: "RIRE & CHANSONS", streamUrl: "https://streaming.nrjaudio.fm/ou8o8xgk7oiu?origine=radio.net", localImage: "rir.png", countryName: "França", countryFlag: "fr.png" },
+      { name: "DJ SENRA", streamUrl: "https://www.pacotedodj.com.br/radio/live-direct.mp3?v=1790090849", localImage: "senra.png", countryName: "djs", countryFlag: "djs.png" },
+      { name: "Tomorrowland - One World", streamUrl: "https://playerservices.streamtheworld.com/api/livestream-redirect/OWR_INTERNATIONAL_ADP.aac", localImage: "tomorrowland.png", countryName: "djs", countryFlag: "djs.png" },
+      { name: "FG MIX TRANCE", streamUrl: "https://stream.rcs.revma.com/v025nezpey3vv.mp3", localImage: "fg.png", countryName: "djs", countryFlag: "djs.png" },
+      { name: "dj zeno", streamUrl: "https://stream.zeno.fm/k9gy85cgwy8uv?1789917104132", localImage: "djzeno.png", countryName: "djs", countryFlag: "djs.png" },
+      { name: "dj buzz", streamUrl: "https://stream.initialradio.fr:8443/djbuzz-192k.mp3", localImage: "djbuzz.png", countryName: "djs", countryFlag: "djs.png" }
     ];
 
     const mainContainer = document.getElementById('mainContainer');
     const audioPlayer = document.getElementById('audioPlayer');
     const currentTitle = document.getElementById('currentTitle');
     const statusText = document.getElementById('status');
-    const cassetteDeck = document.getElementById('cassetteDeck');
+    const playerBarContainer = document.getElementById('playerBarContainer');
     const playToggleBtn = document.getElementById('playToggleBtn');
     const btnIcon = document.getElementById('btnIcon');
     const btnText = document.getElementById('btnText');
+    const vuLeft = document.getElementById('vuLeft');
+    const vuRight = document.getElementById('vuRight');
+
+    const totalLeds = 14;
+    let vuInterval = null;
+
+    // Criar blocos de LED para cada barra
+    function buildVuMeters() {
+      const colors = ['red', 'red', 'orange', 'orange', 'yellow', 'yellow', 'green', 'green', 'green', 'green', 'blue', 'blue', 'blue', 'blue'];
+      [vuLeft, vuRight].forEach(container => {
+        container.innerHTML = '';
+        for (let i = totalLeds - 1; i >= 0; i--) {
+          const led = document.createElement('div');
+          led.className = `led-block ${colors[i]}`;
+          container.appendChild(led);
+        }
+      });
+    }
+
+    // Animação dinâmica das luzes das barras quando a música toca
+    function startVuMeter() {
+      stopVuMeter();
+      vuInterval = setInterval(() => {
+        const levelLeft = Math.floor(Math.random() * (totalLeds - 2)) + 3;
+        const levelRight = Math.floor(Math.random() * (totalLeds - 2)) + 3;
+        
+        updateBar(vuLeft, levelLeft);
+        updateBar(vuRight, levelRight);
+      }, 90);
+    }
+
+    function stopVuMeter() {
+      if (vuInterval) clearInterval(vuInterval);
+      updateBar(vuLeft, 0);
+      updateBar(vuRight, 0);
+    }
+
+    function updateBar(container, level) {
+      const leds = Array.from(container.children).reverse();
+      leds.forEach((led, index) => {
+        if (index < level) {
+          led.classList.add('active');
+        } else {
+          led.classList.remove('active');
+        }
+      });
+    }
 
     function renderRadios() {
       mainContainer.innerHTML = '';
@@ -692,10 +673,7 @@
       const groups = {};
       radios.forEach(radio => {
         if (!groups[radio.countryName]) {
-          groups[radio.countryName] = {
-            flag: radio.countryFlag,
-            items: []
-          };
+          groups[radio.countryName] = { flag: radio.countryFlag, items: [] };
         }
         groups[radio.countryName].items.push(radio);
       });
@@ -728,7 +706,6 @@
         group.items.forEach(radio => {
           const item = document.createElement('div');
           item.className = 'radio-item';
-
           const safeName = radio.name.replace(/'/g, "\\'");
 
           item.innerHTML = `
@@ -757,10 +734,12 @@
       currentTitle.innerText = name;
       statusText.innerHTML = `<span class="playing-pulse"></span> TOCANDO FITA`;
       
-      cassetteDeck.classList.add('playing');
+      playerBarContainer.classList.add('playing');
       playToggleBtn.classList.add('is-playing');
       btnIcon.innerHTML = '&#10074;&#10074;';
       btnText.innerText = 'PAUSE';
+
+      startVuMeter();
     }
 
     function togglePlay() {
@@ -768,21 +747,24 @@
 
       if (audioPlayer.paused) {
         audioPlayer.play();
-        cassetteDeck.classList.add('playing');
+        playerBarContainer.classList.add('playing');
         playToggleBtn.classList.add('is-playing');
         btnIcon.innerHTML = '&#10074;&#10074;';
         btnText.innerText = 'PAUSE';
         statusText.innerHTML = `<span class="playing-pulse"></span> TOCANDO FITA`;
+        startVuMeter();
       } else {
         audioPlayer.pause();
-        cassetteDeck.classList.remove('playing');
+        playerBarContainer.classList.remove('playing');
         playToggleBtn.classList.remove('is-playing');
         btnIcon.innerHTML = '&#9654;';
         btnText.innerText = 'PLAY';
         statusText.innerText = 'PAUSADO';
+        stopVuMeter();
       }
     }
 
+    buildVuMeters();
     renderRadios();
   </script>
 </body>
