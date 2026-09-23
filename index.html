@@ -499,8 +499,8 @@
         name: "FG MIX TRANCE",
         streamUrl: "https://stream.rcs.revma.com/v025nezpey3vv.mp3",
         localImage: "fg.png",
-        countryName: "djs",
-        countryFlag: "djs.png"
+        countryName: "DJS",
+        countryFlag: "DJS.png"
       }
     ];
 
@@ -513,7 +513,7 @@
     function renderRadios() {
       mainContainer.innerHTML = '';
 
-      // Agrupa as rádios pelo nome do país
+      // Agrupa as rádios pelo nome do país/categoria
       const groups = {};
       radios.forEach(radio => {
         if (!groups[radio.countryName]) {
@@ -525,11 +525,21 @@
         groups[radio.countryName].items.push(radio);
       });
 
-      // Renderiza cada grupo de país
-      Object.keys(groups).forEach(countryName => {
+      // Ordena garantindo que DJS fica no topo
+      const countryKeys = Object.keys(groups).sort((a, b) => {
+        const keyA = a.toUpperCase();
+        const keyB = b.toUpperCase();
+        
+        if (keyA === 'DJS') return -1;
+        if (keyB === 'DJS') return 1;
+        return keyA.localeCompare(keyB);
+      });
+
+      // Renderiza cada grupo
+      countryKeys.forEach(countryName => {
         const group = groups[countryName];
 
-        // Ordena as rádios em ordem alfabética dentro do país
+        // Ordena as rádios em ordem alfabética dentro do grupo
         group.items.sort((a, b) => a.name.localeCompare(b.name));
 
         const section = document.createElement('section');
