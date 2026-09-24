@@ -123,8 +123,8 @@
     }
 
     .top-logo {
-      height: 90px;         /* Aumentado de 65px para 90px */
-      max-width: 380px;     /* Aumentado de 280px para 380px */
+      height: 90px;
+      max-width: 380px;
       object-fit: contain;
       filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.6));
     }
@@ -138,16 +138,16 @@
       max-width: 600px;
     }
 
-    /* VÍDEO DO DJ EM LOOP CONTINUO */
+    /* VÍDEO DO DJ EM LOOP CONTINUO - BORDAS REMOVIDAS */
     .dj-video-wrapper {
       position: relative;
       width: 260px;
       height: 145px;
       border-radius: 8px;
       overflow: hidden;
-      background: #000;
-      border: 1px solid rgba(0, 210, 255, 0.4);
-      box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+      background: transparent;
+      border: none;
+      box-shadow: none;
       flex-shrink: 0;
     }
 
@@ -156,6 +156,24 @@
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+
+    /* TEXTO NA PARTE BRANCA DA FITA CASSETE */
+    .cassette-label {
+      position: absolute;
+      top: 15%;
+      left: 12%;
+      width: 76%;
+      text-align: center;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      font-size: 0.8rem;
+      color: #111;
+      pointer-events: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      z-index: 10;
     }
 
     /* BARRAS DE LED (VU METER) */
@@ -421,13 +439,18 @@
     /* ADAPTAÇÃO PARA TELAS DE DISPOSITIVOS MÓVEIS */
     @media (max-width: 480px) {
       .top-logo {
-        height: 65px;         /* Aumentado de 48px para 65px para dispositivos móveis */
-        max-width: 260px;     /* Aumentado de 200px para 260px */
+        height: 65px;
+        max-width: 260px;
       }
 
       .dj-video-wrapper {
         width: 190px;
         height: 110px;
+      }
+
+      .cassette-label {
+        font-size: 0.65rem;
+        top: 14%;
       }
 
       .vu-meter-tower {
@@ -468,6 +491,7 @@
       <div class="vu-meter-tower" id="vuLeft"></div>
 
       <div class="dj-video-wrapper">
+        <div class="cassette-label" id="cassetteLabel"></div>
         <video class="dj-video" autoplay loop muted playsinline>
           <source src="ddj.mp4" type="video/mp4">
         </video>
@@ -536,6 +560,7 @@
     const btnText = document.getElementById('btnText');
     const vuLeft = document.getElementById('vuLeft');
     const vuRight = document.getElementById('vuRight');
+    const cassetteLabel = document.getElementById('cassetteLabel');
 
     const totalLeds = 15;
     let vuInterval = null;
@@ -652,6 +677,7 @@
       audioPlayer.play();
       
       currentTitle.innerText = name;
+      cassetteLabel.innerText = name;
       statusText.innerHTML = `<span class="playing-pulse"></span> Lecture`;
       
       playerBarContainer.classList.add('playing');
