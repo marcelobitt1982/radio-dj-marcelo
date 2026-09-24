@@ -6,14 +6,15 @@
   <title>Rádio DJ Marcelo - Cyber Station</title>
   <style>
     :root {
-      --bg-color: #010a06;
-      --primary: #00ff66;       /* Verde Neon Cyber */
-      --secondary: #ffe600;     /* Amarelo Neon Cyber */
-      --primary-glow: rgba(0, 255, 102, 0.4);
-      --secondary-glow: rgba(255, 230, 0, 0.4);
-      --border-color: rgba(0, 255, 102, 0.25);
-      --text: #e6ffe9;
-      --text-muted: #6e9472;
+      /* Palette Blue Theme inspirée d'Arsenal Ortho AP1 */
+      --bg-color: #030a16;
+      --primary: #00d2ff;       /* Bleu Cyan Bright */
+      --secondary: #0072ff;     /* Bleu Électrique */
+      --primary-glow: rgba(0, 210, 255, 0.4);
+      --secondary-glow: rgba(0, 114, 255, 0.4);
+      --border-color: rgba(0, 210, 255, 0.25);
+      --text: #e6f7ff;
+      --text-muted: #5b82a6;
     }
 
     * {
@@ -33,7 +34,7 @@
       overflow-x: hidden;
     }
 
-    /* Fundo dinâmico com ondas */
+    /* Fundo dinâmico com ondas em tons de azul */
     .bg-waves {
       position: fixed;
       top: 0;
@@ -58,7 +59,7 @@
     .wave-1 {
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, var(--primary) 0%, rgba(0,255,102,0) 70%);
+      background: radial-gradient(circle, var(--primary) 0%, rgba(0,210,255,0) 70%);
       top: -150px;
       left: -100px;
       animation: floatWave1 12s infinite alternate;
@@ -67,7 +68,7 @@
     .wave-2 {
       width: 650px;
       height: 650px;
-      background: radial-gradient(circle, #00c864 0%, rgba(0,200,100,0) 70%);
+      background: radial-gradient(circle, #0055ff 0%, rgba(0,85,255,0) 70%);
       bottom: -150px;
       right: -150px;
       animation: floatWave2 16s infinite alternate;
@@ -76,7 +77,7 @@
     .wave-3 {
       width: 450px;
       height: 450px;
-      background: radial-gradient(circle, rgba(255, 230, 0, 0.3) 0%, rgba(0,0,0,0) 70%);
+      background: radial-gradient(circle, rgba(0, 114, 255, 0.3) 0%, rgba(0,0,0,0) 70%);
       top: 20%;
       left: 20%;
       animation: floatWave3 10s infinite alternate;
@@ -103,29 +104,29 @@
     .player-bar {
       position: sticky;
       top: 0;
-      background: #000000;
+      background: #020712;
       border-bottom: 2px solid var(--primary);
       padding: 0.5rem 0.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 5px 20px rgba(0, 255, 102, 0.25);
+      box-shadow: 0 5px 20px rgba(0, 210, 255, 0.25);
       z-index: 100;
       width: 100%;
     }
 
-    /* LOGO SUPERIOR COMPACTA */
+    /* LOGO SUPERIOR AMPLIADA */
     .top-logo-container {
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.6rem;
       text-align: center;
     }
 
     .top-logo {
-      height: 38px;
-      max-width: 180px;
+      height: 65px;         /* Aumentado de 38px para 65px */
+      max-width: 280px;     /* Aumentado para manter proporção */
       object-fit: contain;
-      filter: drop-shadow(0 0 8px rgba(0, 255, 102, 0.5));
+      filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.6));
     }
 
     .video-player-container {
@@ -145,8 +146,8 @@
       border-radius: 8px;
       overflow: hidden;
       background: #000;
-      border: 1px solid rgba(0, 255, 102, 0.4);
-      box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+      border: 1px solid rgba(0, 210, 255, 0.4);
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
       flex-shrink: 0;
     }
 
@@ -161,8 +162,8 @@
     .vu-meter-tower {
       width: 16px;
       height: 145px;
-      background: #080d0a;
-      border: 1px solid rgba(0, 255, 102, 0.3);
+      background: #040d1a;
+      border: 1px solid rgba(0, 210, 255, 0.3);
       border-radius: 4px;
       padding: 2px;
       display: flex;
@@ -176,29 +177,29 @@
       width: 100%;
       height: 5px;
       border-radius: 1px;
-      background-color: #111a14;
+      background-color: #0b1c2d;
       transition: background-color 0.08s ease, box-shadow 0.08s ease;
     }
 
     .playing .led-block.active.green {
-      background-color: #00ff66;
-      box-shadow: 0 0 4px #00ff66;
+      background-color: #00d2ff;
+      box-shadow: 0 0 4px #00d2ff;
     }
     .playing .led-block.active.yellow {
-      background-color: #ffe600;
-      box-shadow: 0 0 4px #ffe600;
-    }
-    .playing .led-block.active.orange {
-      background-color: #ff9900;
-      box-shadow: 0 0 4px #ff9900;
-    }
-    .playing .led-block.active.red {
-      background-color: #ff2a2a;
-      box-shadow: 0 0 4px #ff2a2a;
-    }
-    .playing .led-block.active.blue {
       background-color: #0099ff;
       box-shadow: 0 0 4px #0099ff;
+    }
+    .playing .led-block.active.orange {
+      background-color: #3366ff;
+      box-shadow: 0 0 4px #3366ff;
+    }
+    .playing .led-block.active.red {
+      background-color: #7000ff;
+      box-shadow: 0 0 4px #7000ff;
+    }
+    .playing .led-block.active.blue {
+      background-color: #00f0ff;
+      box-shadow: 0 0 4px #00f0ff;
     }
 
     /* PAINEL INFERIOR DE CONTROLES E NOME DA RÁDIO */
@@ -210,9 +211,9 @@
       max-width: 500px;
       margin-top: 0.5rem;
       padding: 0.4rem 0.8rem;
-      background: rgba(10, 20, 15, 0.8);
+      background: rgba(4, 18, 36, 0.85);
       border-radius: 6px;
-      border: 1px solid rgba(0, 255, 102, 0.2);
+      border: 1px solid rgba(0, 210, 255, 0.25);
     }
 
     .current-track-info {
@@ -265,8 +266,8 @@
     }
 
     .deck-btn.is-playing {
-      background: linear-gradient(135deg, var(--primary) 0%, #009933 100%);
-      color: #000;
+      background: linear-gradient(135deg, var(--primary) 0%, #0055ff 100%);
+      color: #fff;
       box-shadow: 0 0 12px var(--primary-glow);
     }
 
@@ -288,7 +289,7 @@
       margin-bottom: 1.2rem;
       padding-bottom: 0.4rem;
       border-bottom: 1px solid var(--border-color);
-      color: var(--secondary);
+      color: var(--primary);
       text-transform: uppercase;
       letter-spacing: 1.5px;
       font-size: 1.1rem;
@@ -373,11 +374,11 @@
 
     .realistic-btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(0, 255, 102, 0.4);
+      box-shadow: 0 6px 15px rgba(0, 210, 255, 0.4);
     }
 
     .radio-item.active .realistic-btn {
-      background: linear-gradient(135deg, var(--primary) 0%, #008833 50%, var(--primary) 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, #0055ff 50%, var(--primary) 100%);
       box-shadow: 0 0 18px var(--primary-glow);
     }
 
@@ -420,8 +421,8 @@
     /* ADAPTAÇÃO PARA TELAS DE DISPOSITIVOS MÓVEIS */
     @media (max-width: 480px) {
       .top-logo {
-        height: 30px;
-        max-width: 140px;
+        height: 48px;
+        max-width: 200px;
       }
 
       .dj-video-wrapper {
@@ -457,30 +458,24 @@
     <div class="wave-blob wave-3"></div>
   </div>
 
-  <!-- PLAYER FIXO COM LOGO NO TOPO E VÍDEO DO DJ -->
   <div class="player-bar" id="playerBarContainer">
     
-    <!-- LOGO DA RÁDIO COMPACTA (ATUALIZADO PARA LOGODJ.PNG) -->
     <div class="top-logo-container">
       <img src="logodj.png" alt="Rádio DJ Marcelo" class="top-logo">
     </div>
 
     <div class="video-player-container">
-      <!-- BARRA DE LED ESQUERDA -->
       <div class="vu-meter-tower" id="vuLeft"></div>
 
-      <!-- VÍDEO DO DJ EM LOOP CONTINUO -->
       <div class="dj-video-wrapper">
         <video class="dj-video" autoplay loop muted playsinline>
           <source src="ddj.mp4" type="video/mp4">
         </video>
       </div>
 
-      <!-- BARRA DE LED DIREITA -->
       <div class="vu-meter-tower" id="vuRight"></div>
     </div>
 
-    <!-- PAINEL DE CONTROLE E NOME DA RÁDIO -->
     <div class="player-sub-bar">
       <div class="current-track-info">
         <div class="current-title" id="currentTitle">Nenhuma rádio</div>
