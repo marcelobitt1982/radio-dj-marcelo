@@ -349,7 +349,7 @@
       background: rgba(4, 18, 36, 0.85);
       border: 1px solid var(--border-color);
       color: var(--text);
-      padding: 0.3rem 0.8rem;
+      padding: 0.4rem 0.9rem;
       border-radius: 15px;
       font-size: 0.8rem;
       cursor: pointer;
@@ -433,7 +433,7 @@
       outline: none;
       cursor: pointer;
       position: relative;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
       padding: 5px;
       background: linear-gradient(135deg, #e6e6e6 0%, #888888 45%, #ffffff 50%, #444444 80%, #aaaaaa 100%);
       box-shadow: 
@@ -486,6 +486,18 @@
     .radio-item.active .realistic-btn {
       background: linear-gradient(135deg, var(--primary) 0%, #0055ff 50%, var(--primary) 100%);
       box-shadow: 0 0 18px var(--primary-glow);
+    }
+
+    .radio-origin-label {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+      max-width: 100px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .radio-item h3 {
@@ -610,16 +622,17 @@
 
   <div class="controls-wrapper">
     <div class="search-box-container">
-      <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar rádios no mundo inteiro (ex: pop, rock, sertanejo, ibiza)..." oninput="handleSearchDebounce()">
+      <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar rádios no mundo inteiro..." oninput="handleSearchDebounce()">
     </div>
 
+    <!-- ABAS SEPARADAS SOLICITADAS -->
     <div class="category-filter">
       <button class="cat-btn active" onclick="filterCategory('ALL', this)">Todas</button>
       <button class="cat-btn" onclick="filterCategory('FAV', this)">⭐ Favoritas</button>
-      <button class="cat-btn" onclick="filterCategory('Brasil', this)">Brasil</button>
-      <button class="cat-btn" onclick="filterCategory('França', this)">França</button>
-      <button class="cat-btn" onclick="filterCategory('Espanha', this)">Espanha</button>
       <button class="cat-btn" onclick="filterCategory('djs', this)">DJs</button>
+      <button class="cat-btn" onclick="filterCategory('Brasil', this)">Brasil</button>
+      <button class="cat-btn" onclick="filterCategory('Espanha', this)">Espanha</button>
+      <button class="cat-btn" onclick="filterCategory('França', this)">França</button>
     </div>
   </div>
 
@@ -739,15 +752,12 @@
       const targetRadio = allAvailable.find(r => String(r.id) === String(id));
 
       if (favorites.includes(id)) {
-        // Remover dos favoritos
         favorites = favorites.filter(favId => String(favId) !== String(id));
-        // Se for rádio da API, remove completamente do cache permanente
         if (String(id).startsWith('api_')) {
           savedApiRadios = savedApiRadios.filter(r => String(r.id) !== String(id));
           localStorage.setItem('radio_saved_objects', JSON.stringify(savedApiRadios));
         }
       } else {
-        // Adicionar aos favoritos
         favorites.push(id);
         if (targetRadio && String(id).startsWith('api_')) {
           const alreadySaved = savedApiRadios.some(r => String(r.id) === String(id));
@@ -795,123 +805,110 @@
       renderRadios();
     }
 
+    function createRadioCard(radio) {
+      const item = document.createElement('div');
+      item.className = 'radio-item';
+      const isFav = favorites.includes(radio.id);
+
+      item.innerHTML = `
+        <span class="fav-star ${isFav ? 'active' : ''}" onclick="toggleFavorite('${radio.id}', event)">★</span>
+        <button class="realistic-btn" onclick="playRadio(this, '${radio.streamUrl}', '${radio.name.replace(/'/g, "\\'")}')" title="Tocar ${radio.name}">
+          <img src="${radio.localImage}" alt="${radio.name}" onerror="this.src='logodj.png'">
+        </button>
+        <span class="radio-origin-label">${radio.countryName || 'Mundo'}</span>
+        <h3>${radio.name}</h3>
+      `;
+      return item;
+    }
+
+    function renderCategorySection(title, radios) {
+      if (radios.length === 0) return;
+
+      radios.sort((a, b) => a.name.localeCompare(b.name));
+
+      const section = document.createElement('section');
+      section.className = 'country-section';
+
+      const header = document.createElement('h2');
+      header.className = 'country-header';
+      header.innerHTML = `<span>${title}</span>`;
+
+      const radioGrid = document.createElement('div');
+      radioGrid.className = 'grid-radios';
+
+      radios.forEach(radio => {
+        radioGrid.appendChild(createRadioCard(radio));
+      });
+
+      section.appendChild(header);
+      section.appendChild(radioGrid);
+      mainContainer.appendChild(section);
+    }
+
     function renderRadios() {
       mainContainer.innerHTML = '';
       const searchQuery = document.getElementById('searchInput').value.toLowerCase();
 
-      // Unir rádios locais com salvas e busca atual
+      // Mapeia todas as rádios únicas
       const map = new Map();
       [...localRadios, ...savedApiRadios, ...apiSearchResultRadios].forEach(radio => {
         map.set(String(radio.id), radio);
       });
       const allRadios = Array.from(map.values());
 
-      let filteredRadios = allRadios.filter(r => {
-        const isFav = favorites.includes(r.id);
-        const matchesSearch = r.name.toLowerCase().includes(searchQuery) || r.countryName.toLowerCase().includes(searchQuery);
+      // Filtra por busca caso digitado algo
+      const searchFiltered = allRadios.filter(r => 
+        r.name.toLowerCase().includes(searchQuery) || 
+        r.countryName.toLowerCase().includes(searchQuery)
+      );
 
-        if (selectedCategory === 'ALL') {
-          return matchesSearch;
-        }
-        if (selectedCategory === 'FAV') {
-          return isFav && matchesSearch;
-        }
-        return r.countryName.toLowerCase() === selectedCategory.toLowerCase() && matchesSearch;
-      });
-
-      if (filteredRadios.length === 0) {
-        mainContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">Nenhuma rádio encontrada.</p>`;
-        return;
-      }
-
-      // Se estiver na aba FAVORITOS
+      // 1. VISUALIZAÇÃO ABA FAVORITAS (Única lista)
       if (selectedCategory === 'FAV') {
-        filteredRadios.sort((a, b) => a.name.localeCompare(b.name));
-
-        const section = document.createElement('section');
-        section.className = 'country-section';
-
-        const header = document.createElement('h2');
-        header.className = 'country-header';
-        header.innerHTML = `<span>⭐ MINHAS RÁDIOS FAVORITAS (${filteredRadios.length})</span>`;
-
-        const radioGrid = document.createElement('div');
-        radioGrid.className = 'grid-radios';
-
-        filteredRadios.forEach(radio => {
-          const item = document.createElement('div');
-          item.className = 'radio-item';
-          const isFav = favorites.includes(radio.id);
-
-          item.innerHTML = `
-            <span class="fav-star ${isFav ? 'active' : ''}" onclick="toggleFavorite('${radio.id}', event)">★</span>
-            <button class="realistic-btn" onclick="playRadio(this, '${radio.streamUrl}', '${radio.name.replace(/'/g, "\\'")}')" title="Tocar ${radio.name}">
-              <img src="${radio.localImage}" alt="${radio.name}" onerror="this.src='logodj.png'">
-            </button>
-            <h3>${radio.name}</h3>
-          `;
-
-          radioGrid.appendChild(item);
-        });
-
-        section.appendChild(header);
-        section.appendChild(radioGrid);
-        mainContainer.appendChild(section);
+        const favRadios = searchFiltered.filter(r => favorites.includes(r.id));
+        if (favRadios.length === 0) {
+          mainContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">Nenhuma rádio favoritada ainda.</p>`;
+          return;
+        }
+        renderCategorySection(`⭐ MINHAS RÁDIOS FAVORITAS (${favRadios.length})`, favRadios);
         return;
       }
 
-      // Para outras categorias (Todas, Brasil, Espanha, etc.)
-      const groups = {};
-      filteredRadios.forEach(radio => {
-        const key = radio.countryName;
-        if (!groups[key]) {
-          groups[key] = { items: [] };
+      // 2. SELEÇÃO DE CATEGORIA ESPECÍFICA (DJs, Brasil, Espanha, França)
+      if (selectedCategory !== 'ALL') {
+        const categoryRadios = searchFiltered.filter(r => r.countryName.toLowerCase() === selectedCategory.toLowerCase());
+        if (categoryRadios.length === 0) {
+          mainContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">Nenhuma rádio encontrada para esta categoria.</p>`;
+          return;
         }
-        groups[key].items.push(radio);
-      });
+        renderCategorySection(`${selectedCategory.toUpperCase()}`, categoryRadios);
+        return;
+      }
 
-      const countryKeys = Object.keys(groups).sort((a, b) => {
-        if (a.toUpperCase() === 'BRASIL') return -1;
-        if (b.toUpperCase() === 'BRASIL') return 1;
-        if (a.toUpperCase() === 'DJS') return -1;
-        if (b.toUpperCase() === 'DJS') return 1;
-        return a.localeCompare(b);
-      });
+      // 3. VISUALIZAÇÃO "TODAS"
+      // Se tiver rádio em favoritos, exibe o bloco no topo
+      const favRadiosAll = searchFiltered.filter(r => favorites.includes(r.id));
+      if (favRadiosAll.length > 0 && searchQuery === '') {
+        renderCategorySection('⭐ FAVORITOS', favRadiosAll);
+      }
 
-      countryKeys.forEach(countryName => {
-        const group = groups[countryName];
-        group.items.sort((a, b) => a.name.localeCompare(b.name));
+      // Se houver pesquisa, mostra resultado direto
+      if (searchQuery !== '') {
+        renderCategorySection('RESULTADOS DA BUSCA', searchFiltered);
+        return;
+      }
 
-        const section = document.createElement('section');
-        section.className = 'country-section';
+      // Separado por cada categoria conforme solicitado:
+      const djsRadios = searchFiltered.filter(r => r.countryName.toLowerCase() === 'djs');
+      const brasilRadios = searchFiltered.filter(r => r.countryName.toLowerCase() === 'brasil');
+      const espanhaRadios = searchFiltered.filter(r => r.countryName.toLowerCase() === 'espanha');
+      const françaRadios = searchFiltered.filter(r => r.countryName.toLowerCase() === 'frança');
+      const outrasRadios = searchFiltered.filter(r => !['djs', 'brasil', 'espanha', 'frança'].includes(r.countryName.toLowerCase()));
 
-        const countryHeader = document.createElement('h2');
-        countryHeader.className = 'country-header';
-        countryHeader.innerHTML = `<span>${countryName}</span>`;
-
-        const radioGrid = document.createElement('div');
-        radioGrid.className = 'grid-radios';
-
-        group.items.forEach(radio => {
-          const item = document.createElement('div');
-          item.className = 'radio-item';
-          const isFav = favorites.includes(radio.id);
-
-          item.innerHTML = `
-            <span class="fav-star ${isFav ? 'active' : ''}" onclick="toggleFavorite('${radio.id}', event)">★</span>
-            <button class="realistic-btn" onclick="playRadio(this, '${radio.streamUrl}', '${radio.name.replace(/'/g, "\\'")}')" title="Tocar ${radio.name}">
-              <img src="${radio.localImage}" alt="${radio.name}" onerror="this.src='logodj.png'">
-            </button>
-            <h3>${radio.name}</h3>
-          `;
-
-          radioGrid.appendChild(item);
-        });
-
-        section.appendChild(countryHeader);
-        section.appendChild(radioGrid);
-        mainContainer.appendChild(section);
-      });
+      renderCategorySection('🎧 DJS', djsRadios);
+      renderCategorySection('🇧🇷 BRASIL', brasilRadios);
+      renderCategorySection('🇪🇸 ESPANHA', espanhaRadios);
+      renderCategorySection('🇫🇷 FRANÇA', françaRadios);
+      renderCategorySection('🌍 OUTRAS RÁDIOS', outrasRadios);
     }
 
     function filterCategory(cat, btn) {
