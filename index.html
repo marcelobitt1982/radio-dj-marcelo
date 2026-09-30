@@ -138,6 +138,7 @@
       max-width: 600px;
     }
 
+    /* VÍDEO DO DJ EM LOOP CONTINUO - BORDAS REMOVIDAS */
     .dj-video-wrapper {
       position: relative;
       width: 260px;
@@ -288,107 +289,6 @@
       box-shadow: 0 0 12px var(--primary-glow);
     }
 
-    /* SEÇÃO DE PROCURA DE MÚSICA */
-    .music-search-section {
-      background: rgba(4, 18, 36, 0.85);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1.2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    }
-
-    .search-header-title {
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-    }
-
-    .search-box-wrapper {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .search-input {
-      flex: 1;
-      padding: 0.7rem 1rem;
-      background: #020712;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      color: var(--text);
-      font-size: 0.95rem;
-      outline: none;
-    }
-
-    .search-input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 8px var(--primary-glow);
-    }
-
-    .search-btn {
-      background: linear-gradient(135deg, var(--primary) 0%, #0055ff 100%);
-      border: none;
-      color: #fff;
-      font-weight: bold;
-      padding: 0.7rem 1.2rem;
-      border-radius: 6px;
-      cursor: pointer;
-      text-transform: uppercase;
-    }
-
-    .search-results-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 1rem;
-      margin-top: 1.2rem;
-    }
-
-    .track-card {
-      background: #020712;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 0.6rem;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .track-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 12px var(--primary-glow);
-      border-color: var(--primary);
-    }
-
-    .track-card img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 6px;
-      margin-bottom: 0.5rem;
-    }
-
-    .track-title {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.2;
-      max-width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .track-artist {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
     main {
       max-width: 1100px;
       margin: 1rem auto;
@@ -536,15 +436,40 @@
       100% { opacity: 1; transform: scale(1.3); }
     }
 
+    /* ADAPTAÇÃO PARA TELAS DE DISPOSITIVOS MÓVEIS */
     @media (max-width: 480px) {
-      .top-logo { height: 65px; max-width: 260px; }
-      .dj-video-wrapper { width: 190px; height: 110px; }
-      .cassette-label { font-size: 0.65rem; top: 14%; }
-      .vu-meter-tower { width: 12px; height: 110px; }
-      .led-block { height: 4px; }
-      .grid-radios { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
-      .realistic-btn { width: 70px; height: 70px; }
-      .search-box-wrapper { flex-direction: column; }
+      .top-logo {
+        height: 65px;
+        max-width: 260px;
+      }
+
+      .dj-video-wrapper {
+        width: 190px;
+        height: 110px;
+      }
+
+      .cassette-label {
+        font-size: 0.65rem;
+        top: 14%;
+      }
+
+      .vu-meter-tower {
+        width: 12px;
+        height: 110px;
+      }
+
+      .led-block {
+        height: 4px;
+      }
+
+      .grid-radios {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      }
+
+      .realistic-btn {
+        width: 70px;
+        height: 70px;
+      }
     }
   </style>
 </head>
@@ -558,6 +483,7 @@
   </div>
 
   <div class="player-bar" id="playerBarContainer">
+    
     <div class="top-logo-container">
       <img src="logodj.png" alt="Rádio DJ Marcelo" class="top-logo">
     </div>
@@ -567,7 +493,7 @@
 
       <div class="dj-video-wrapper">
         <div class="cassette-label" id="cassetteLabel"></div>
-        <video class="dj-video" id="djVideo" autoplay loop muted playsinline>
+        <video class="dj-video" autoplay loop muted playsinline>
           <source src="ddj.mp4" type="video/mp4">
         </video>
       </div>
@@ -589,20 +515,7 @@
 
   <audio id="audioPlayer" autoplay></audio>
 
-  <main>
-    <!-- PESQUISA DE MÚSICA -->
-    <section class="music-search-section">
-      <h2 class="search-header-title">🎵 Pesquisar Música / Artista</h2>
-      <div class="search-box-wrapper">
-        <input type="text" id="searchInput" class="search-input" placeholder="Digite o nome da música ou artista..." onkeypress="handleSearchKey(event)">
-        <button class="search-btn" onclick="searchMusic()">Buscar</button>
-      </div>
-      <div id="searchResults" class="search-results-grid"></div>
-    </section>
-
-    <!-- LISTA DE RÁDIOS -->
-    <div id="mainContainer"></div>
-  </main>
+  <main id="mainContainer"></main>
 
   <script>
     const radios = [
@@ -656,7 +569,14 @@
     let vuInterval = null;
 
     function buildVuMeters() {
-      const colors = ['green', 'green', 'green', 'green', 'green', 'green', 'yellow', 'yellow', 'yellow', 'yellow', 'orange', 'orange', 'red', 'red', 'blue'];
+      const colors = [
+        'green', 'green', 'green', 'green', 'green', 'green',
+        'yellow', 'yellow', 'yellow', 'yellow',
+        'orange', 'orange',
+        'red', 'red',
+        'blue'
+      ];
+
       [vuLeft, vuRight].forEach(container => {
         container.innerHTML = '';
         for (let i = 0; i < totalLeds; i++) {
@@ -672,6 +592,7 @@
       vuInterval = setInterval(() => {
         const levelLeft = Math.floor(Math.random() * (totalLeds - 3)) + 4;
         const levelRight = Math.floor(Math.random() * (totalLeds - 3)) + 4;
+        
         updateBar(vuLeft, levelLeft);
         updateBar(vuRight, levelRight);
       }, 90);
@@ -686,23 +607,31 @@
     function updateBar(container, level) {
       const leds = Array.from(container.children);
       leds.forEach((led, index) => {
-        if (index < level) led.classList.add('active');
-        else led.classList.remove('active');
+        if (index < level) {
+          led.classList.add('active');
+        } else {
+          led.classList.remove('active');
+        }
       });
     }
 
     function renderRadios() {
       mainContainer.innerHTML = '';
+
       const groups = {};
       radios.forEach(radio => {
-        if (!groups[radio.countryName]) groups[radio.countryName] = { flag: radio.countryFlag, items: [] };
+        if (!groups[radio.countryName]) {
+          groups[radio.countryName] = { flag: radio.countryFlag, items: [] };
+        }
         groups[radio.countryName].items.push(radio);
       });
 
       const countryKeys = Object.keys(groups).sort((a, b) => {
-        if (a.toUpperCase() === 'DJS') return -1;
-        if (b.toUpperCase() === 'DJS') return 1;
-        return a.localeCompare(b);
+        const keyA = a.toUpperCase();
+        const keyB = b.toUpperCase();
+        if (keyA === 'DJS') return -1;
+        if (keyB === 'DJS') return 1;
+        return keyA.localeCompare(keyB);
       });
 
       countryKeys.forEach(countryName => {
@@ -714,7 +643,10 @@
 
         const countryHeader = document.createElement('h2');
         countryHeader.className = 'country-header';
-        countryHeader.innerHTML = `<img src="${group.flag}" alt="${countryName}" class="country-flag" onerror="this.style.display='none'"><span>${countryName}</span>`;
+        countryHeader.innerHTML = `
+          <img src="${group.flag}" alt="${countryName}" class="country-flag" onerror="this.style.display='none'">
+          <span>${countryName}</span>
+        `;
 
         const radioGrid = document.createElement('div');
         radioGrid.className = 'grid-radios';
@@ -725,7 +657,7 @@
           const safeName = radio.name.replace(/'/g, "\\'");
 
           item.innerHTML = `
-            <button class="realistic-btn" onclick="playAudioStream('${radio.streamUrl}', '${safeName}', this)" title="Tocar ${radio.name}">
+            <button class="realistic-btn" onclick="playRadio(this, '${radio.streamUrl}', '${safeName}')" title="Tocar ${radio.name}">
               <img src="${radio.localImage}" alt="${radio.name}" onerror="this.src='logodj.png'">
             </button>
             <h3>${radio.name}</h3>
@@ -740,72 +672,23 @@
       });
     }
 
-    function playAudioStream(url, name, buttonElement) {
+    function playRadio(buttonElement, url, name) {
       document.querySelectorAll('.radio-item').forEach(item => item.classList.remove('active'));
-      if (buttonElement) buttonElement.parentElement.classList.add('active');
+      buttonElement.parentElement.classList.add('active');
 
       audioPlayer.src = url;
       audioPlayer.play();
-
+      
       currentTitle.innerText = name;
       cassetteLabel.innerText = name;
-      statusText.innerHTML = `<span class="playing-pulse"></span> TOCANDO`;
-
+      statusText.innerHTML = `<span class="playing-pulse"></span> Lecture`;
+      
       playerBarContainer.classList.add('playing');
       playToggleBtn.classList.add('is-playing');
       btnIcon.innerHTML = '&#10074;&#10074;';
       btnText.innerText = 'PAUSE';
 
       startVuMeter();
-    }
-
-    function handleSearchKey(event) {
-      if (event.key === 'Enter') searchMusic();
-    }
-
-    /* BUSCA VIA ITUNES PUBLIC API (Funciona 100% sem erros de CORS) */
-    async function searchMusic() {
-      const query = document.getElementById('searchInput').value.trim();
-      const resultsContainer = document.getElementById('searchResults');
-      
-      if (!query) return;
-
-      resultsContainer.innerHTML = '<p style="color: var(--text-muted); text-align: center; grid-column: 1/-1;">Procurando faixas...</p>';
-
-      try {
-        const response = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&limit=10`);
-        const data = await response.json();
-
-        resultsContainer.innerHTML = '';
-
-        if (!data.results || data.results.length === 0) {
-          resultsContainer.innerHTML = '<p style="color: var(--text-muted); text-align: center; grid-column: 1/-1;">Nenhuma música encontrada.</p>';
-          return;
-        }
-
-        data.results.forEach(track => {
-          const card = document.createElement('div');
-          card.className = 'track-card';
-
-          const trackName = track.trackName.replace(/'/g, "\\'");
-          const artistName = track.artistName.replace(/'/g, "\\'");
-          const coverImg = track.artworkUrl100.replace('100x100bb', '300x300bb');
-
-          card.onclick = () => playAudioStream(track.previewUrl, `${track.artistName} - ${track.trackName}`, null);
-
-          card.innerHTML = `
-            <img src="${coverImg}" alt="${trackName}">
-            <div class="track-title">${track.trackName}</div>
-            <div class="track-artist">${track.artistName}</div>
-          `;
-
-          resultsContainer.appendChild(card);
-        });
-
-      } catch (error) {
-        console.error('Erro na busca:', error);
-        resultsContainer.innerHTML = '<p style="color: #ff4444; text-align: center; grid-column: 1/-1;">Erro ao realizar a busca.</p>';
-      }
     }
 
     function togglePlay() {
