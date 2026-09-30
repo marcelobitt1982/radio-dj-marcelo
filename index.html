@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rádio DJ Marcelo</title>
+  <title>Rádio DJ Marcelo - World & Favorites Edition</title>
   <style>
     :root {
-      /* Palette Blue Theme inspirée d'Arsenal Ortho AP1 */
       --bg-color: #030a16;
-      --primary: #00d2ff;       /* Bleu Cyan Bright */
-      --secondary: #0072ff;     /* Bleu Électrique */
+      --primary: #00d2ff;       /* Cyan Bright */
+      --secondary: #0072ff;     /* Azul Électrico */
       --primary-glow: rgba(0, 210, 255, 0.4);
       --secondary-glow: rgba(0, 114, 255, 0.4);
       --border-color: rgba(0, 210, 255, 0.25);
@@ -116,14 +115,13 @@
       width: 100%;
     }
 
-    /* LOGO SUPERIOR AMPLIADA */
     .top-logo-container {
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.4rem;
       text-align: center;
     }
 
     .top-logo {
-      height: 90px;
+      height: 80px;
       max-width: 380px;
       object-fit: contain;
       filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.6));
@@ -138,7 +136,6 @@
       max-width: 600px;
     }
 
-    /* VÍDEO DO DJ EM LOOP CONTINUO - BORDAS REMOVIDAS */
     .dj-video-wrapper {
       position: relative;
       width: 260px;
@@ -158,7 +155,6 @@
       display: block;
     }
 
-    /* TEXTO NA PARTE BRANCA DA FITA CASSETE */
     .cassette-label {
       position: absolute;
       top: 15%;
@@ -176,7 +172,6 @@
       z-index: 10;
     }
 
-    /* BARRAS DE LED (VU METER) */
     .vu-meter-tower {
       width: 16px;
       height: 145px;
@@ -220,24 +215,25 @@
       box-shadow: 0 0 4px #00f0ff;
     }
 
-    /* PAINEL INFERIOR DE CONTROLES E NOME DA RÁDIO */
     .player-sub-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      max-width: 500px;
+      max-width: 600px;
       margin-top: 0.5rem;
       padding: 0.4rem 0.8rem;
       background: rgba(4, 18, 36, 0.85);
       border-radius: 6px;
       border: 1px solid rgba(0, 210, 255, 0.25);
+      gap: 10px;
     }
 
     .current-track-info {
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      flex-grow: 1;
     }
 
     .current-title {
@@ -259,6 +255,26 @@
       align-items: center;
     }
 
+    .volume-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .volume-btn {
+      background: transparent;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .volume-slider {
+      width: 70px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
     .deck-btn {
       background: linear-gradient(135deg, #e6e6e6 0%, #888888 45%, #ffffff 50%, #444444 80%, #aaaaaa 100%);
       border: none;
@@ -276,6 +292,7 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       transition: all 0.15s ease;
+      flex-shrink: 0;
     }
 
     .deck-btn:active {
@@ -287,6 +304,64 @@
       background: linear-gradient(135deg, var(--primary) 0%, #0055ff 100%);
       color: #fff;
       box-shadow: 0 0 12px var(--primary-glow);
+    }
+
+    .controls-wrapper {
+      max-width: 1100px;
+      margin: 1rem auto 0 auto;
+      padding: 0 0.8rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .search-box-container {
+      width: 100%;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      background-color: rgba(4, 18, 36, 0.85);
+      color: var(--text);
+      outline: none;
+      font-size: 0.9rem;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    .category-filter {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+    }
+
+    .cat-btn {
+      background: rgba(4, 18, 36, 0.85);
+      border: 1px solid var(--border-color);
+      color: var(--text);
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .cat-btn.active, .cat-btn:hover {
+      background: var(--primary);
+      color: #000;
+      font-weight: bold;
+      border-color: var(--primary);
     }
 
     main {
@@ -335,6 +410,27 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+    }
+
+    .fav-star {
+      position: absolute;
+      top: 0;
+      right: 10px;
+      z-index: 10;
+      cursor: pointer;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.3);
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .fav-star.active {
+      color: #ffd700;
+      text-shadow: 0 0 5px #ffd700;
+    }
+
+    .fav-star:hover {
+      transform: scale(1.2);
     }
 
     .realistic-btn {
@@ -436,16 +532,15 @@
       100% { opacity: 1; transform: scale(1.3); }
     }
 
-    /* ADAPTAÇÃO PARA TELAS DE DISPOSITIVOS MÓVEIS */
     @media (max-width: 480px) {
       .top-logo {
-        height: 65px;
+        height: 60px;
         max-width: 260px;
       }
 
       .dj-video-wrapper {
-        width: 190px;
-        height: 110px;
+        width: 180px;
+        height: 100px;
       }
 
       .cassette-label {
@@ -455,11 +550,15 @@
 
       .vu-meter-tower {
         width: 12px;
-        height: 110px;
+        height: 100px;
       }
 
       .led-block {
-        height: 4px;
+        height: 3px;
+      }
+
+      .volume-slider {
+        width: 45px;
       }
 
       .grid-radios {
@@ -483,7 +582,6 @@
   </div>
 
   <div class="player-bar" id="playerBarContainer">
-    
     <div class="top-logo-container">
       <img src="logodj.png" alt="Rádio DJ Marcelo" class="top-logo">
     </div>
@@ -492,7 +590,7 @@
       <div class="vu-meter-tower" id="vuLeft"></div>
 
       <div class="dj-video-wrapper">
-        <div class="cassette-label" id="cassetteLabel"></div>
+        <div class="cassette-label" id="cassetteLabel">SELECIONE UMA RÁDIO</div>
         <video class="dj-video" autoplay loop muted playsinline>
           <source src="ddj.mp4" type="video/mp4">
         </video>
@@ -504,7 +602,12 @@
     <div class="player-sub-bar">
       <div class="current-track-info">
         <div class="current-title" id="currentTitle">Nenhuma rádio</div>
-        <div class="status-badge" id="status">EN ATTENTE</div>
+        <div class="status-badge" id="status">AGUARDANDO</div>
+      </div>
+
+      <div class="volume-controls">
+        <button class="volume-btn" id="muteBtn" onclick="toggleMute()">🔊</button>
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.05" value="0.8" oninput="changeVolume(this.value)">
       </div>
 
       <button class="deck-btn" id="playToggleBtn" onclick="togglePlay()">
@@ -513,45 +616,65 @@
     </div>
   </div>
 
-  <audio id="audioPlayer" autoplay></audio>
+  <div class="controls-wrapper">
+    <div class="search-box-container">
+      <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar rádios no mundo inteiro (ex: pop, rock, sertanejo, ibiza)..." oninput="handleSearchDebounce()">
+    </div>
+
+    <div class="category-filter">
+      <button class="cat-btn active" onclick="filterCategory('ALL', this)">Todas</button>
+      <button class="cat-btn" onclick="filterCategory('FAV', this)">⭐ Favoritas</button>
+      <button class="cat-btn" onclick="filterCategory('Brasil', this)">Brasil</button>
+      <button class="cat-btn" onclick="filterCategory('França', this)">França</button>
+      <button class="cat-btn" onclick="filterCategory('Espanha', this)">Espanha</button>
+      <button class="cat-btn" onclick="filterCategory('djs', this)">DJs</button>
+    </div>
+  </div>
+
+  <audio id="audioPlayer"></audio>
 
   <main id="mainContainer"></main>
 
   <script>
-    const radios = [
-      { name: "ROCK", streamUrl: "https://stream.rockantenne.de/90er-rock/stream/mp3?aw_0_1st.playerid=radio.de", localImage: "rock.png", countryName: "Brasil", countryFlag: "br.png" },
-      { name: "FORRO", streamUrl: "https://stm5.xcast.com.br:10684/wfai?1789917171675", localImage: "forro.png", countryName: "Brasil", countryFlag: "br.png" },
-      { name: "MODÃO", streamUrl: "https://s22.maxcast.com.br:8034/live?17899172669343", localImage: "modao.png", countryName: "Brasil", countryFlag: "br.png" },
-      { name: "SERTANEJO", streamUrl: "https://centova5.transmissaodigital.com:20042/stream?1789917354447", localImage: "sertanejo.png", countryName: "Brasil", countryFlag: "br.png" },
-      { name: "ROCK NACIONAL", streamUrl: "https://stm1.painelvox.xyz:6696/steam?1789917407173", localImage: "rocknac.png", countryName: "Brasil", countryFlag: "br.png" },
-      { name: "LATINA", streamUrl: "https://server06.srvsh.com.br:8008/;?1789917491711", localImage: "latina.png", countryName: "Brasil", countryFlag: "br.png" },
-      { name: "TECNO HOUSE", streamUrl: "https://stream.zeno.fm/6c2d25gk5gruv?1789920022127", localImage: "tecnohouse.png", countryName: "Brasil", countryFlag: "br.png" },
-      { name: "GOSPEL", streamUrl: "https://stm11.xcast.com.br:10052/stream?1789920148018", localImage: "gospel.png", countryName: "Brasil", countryFlag: "br.png" },
-      { name: "MPB", streamUrl: "https://sv11.hdradios.net:8152/stream?1789922687905", localImage: "mpb.png", countryName: "Brasil", countryFlag: "br.png" },
-      { name: "RADIO RIO VERMELHO", streamUrl: "https://str1.streamhostpg.com.br:8030/stream", localImage: "rrv.png", countryName: "Brasil", countryFlag: "br.png" },
-      { name: "FLASH DISCO DANCE", streamUrl: "https://stm1.srvif.com:21764/stream?1789923017551", localImage: "fdd.png", countryName: "Brasil", countryFlag: "br.png" },
-      { name: "RADIO GALICIA", streamUrl: "https://srv6022.dns-lcinternet.com:8059/live", localImage: "galicia.png", countryName: "Espanha", countryFlag: "es.png" },
-      { name: "BLUE MARLIN IBIZA", streamUrl: "https://ibizasonica.streaming-pro.com:8001/bluemarlin", localImage: "blue.png", countryName: "Espanha", countryFlag: "es.png" },
-      { name: "los 40", streamUrl: "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_CLASSICAAC.aac", localImage: "los40.png", countryName: "Espanha", countryFlag: "es.png" },
-      { name: "IBIZA GLOBAL", streamUrl: "https://listenssl.ibizaglobalradio.com:8024/stream", localImage: "ibiza.png", countryName: "Espanha", countryFlag: "es.png" },
-      { name: "MUSIQUE CLASSIQUE", streamUrl: "https://icecast.radiofrance.fr/francemusique-hifi.aac", localImage: "classique.png", countryName: "França", countryFlag: "fr.png" },
-      { name: "RADIO LATINA", streamUrl: "https://start-latina.ice.infomaniak.ch/start-latina-high.mp3", localImage: "rlatina.png", countryName: "França", countryFlag: "fr.png" },
-      { name: "RAP FR", streamUrl: "https://generationfm-rap.ice.infomaniak.ch/generationfm-rap-high.mp3", localImage: "rapfr.png", countryName: "França", countryFlag: "fr.png" },
-      { name: "SKYROCK", streamUrl: "https://icecast.skyrock.net/s/natio_aac_96k", localImage: "skyrock.png", countryName: "França", countryFlag: "fr.png" },
-      { name: "NRJ", streamUrl: "https://streaming.nrjaudio.fm/oumvmk8fnozc?origine=radio.net", localImage: "nrj.png", countryName: "França", countryFlag: "fr.png" },
-      { name: "RIRE & CHANSONS", streamUrl: "https://streaming.nrjaudio.fm/ou8o8xgk7oiu?origine=radio.net", localImage: "rir.png", countryName: "França", countryFlag: "fr.png" },
-      { name: "DJ SENRA", streamUrl: "https://www.pacotedodj.com.br/radio/live-direct.mp3?v=1790090849", localImage: "senra.png", countryName: "djs", countryFlag: "djs.png" },
-      { name: "Tomorrowland", streamUrl: "https://playerservices.streamtheworld.com/api/livestream-redirect/OWR_INTERNATIONAL_ADP.aac", localImage: "tomorrowland.png", countryName: "djs", countryFlag: "djs.png" },
-      { name: "FG MIX TRANCE", streamUrl: "https://stream.rcs.revma.com/v025nezpey3vv.mp3", localImage: "fg.png", countryName: "djs", countryFlag: "djs.png" },
-      { name: "dj Eddy", streamUrl: "https://stream.zeno.fm/k9gy85cgwy8uv?1789917104132", localImage: "djeddy.jpeg", countryName: "djs", countryFlag: "djs.png" },
-      { name: "dj buzz", streamUrl: "https://stream.initialradio.fr:8443/djbuzz-192k.mp3", localImage: "djbuzz.png", countryName: "djs", countryFlag: "djs.png" },
-      { name: "JAZZ & SOUL", streamUrl: "https://jazzradio.ice.infomaniak.ch/jazzradio-high.aac?aw_0_1st.playerId=jazzradio_web", localImage: "jazz.png", countryName: "França", countryFlag: "fr.png" },
-      { name: "NTI NANTES", streamUrl: "https://manager11.streamradio.fr:3635/stream", localImage: "nti.png", countryName: "França", countryFlag: "fr.png" },
-      { name: "flor fm", streamUrl: "https://florfm.ice.infomaniak.ch/webcolmar.mp3", localImage: "flor.png", countryName: "França", countryFlag: "fr.png" },
-      { name: "nostalgie", streamUrl: "https://streaming.nrjaudio.fm/oug7girb92oc?origine=touteslesradios", localImage: "nostalgie.png", countryName: "França", countryFlag: "fr.png" },
-      { name: "DJ CENTRAL", streamUrl: "https://streaming.inweb.com.br/centraldj", localImage: "djcentral.png", countryName: "djs", countryFlag: "djs.png" },
-      { name: "Bossa Nova", streamUrl: "https://radio2.vip-radios.fm:18009/stream-128kmp3-BossaNovaBrazil", localImage: "bossa.png", countryName: "Brasil", countryFlag: "br.png" }
+    const localRadios = [
+      { id: 1, name: "ROCK", streamUrl: "https://stream.rockantenne.de/90er-rock/stream/mp3?aw_0_1st.playerid=radio.de", localImage: "rock.png", countryName: "Brasil", countryFlag: "br.png" },
+      { id: 2, name: "FORRO", streamUrl: "https://stm5.xcast.com.br:10684/wfai?1789917171675", localImage: "forro.png", countryName: "Brasil", countryFlag: "br.png" },
+      { id: 3, name: "MODÃO", streamUrl: "https://s22.maxcast.com.br:8034/live?17899172669343", localImage: "modao.png", countryName: "Brasil", countryFlag: "br.png" },
+      { id: 4, name: "SERTANEJO", streamUrl: "https://centova5.transmissaodigital.com:20042/stream?1789917354447", localImage: "sertanejo.png", countryName: "Brasil", countryFlag: "br.png" },
+      { id: 5, name: "ROCK NACIONAL", streamUrl: "https://stm1.painelvox.xyz:6696/steam?1789917407173", localImage: "rocknac.png", countryName: "Brasil", countryFlag: "br.png" },
+      { id: 6, name: "LATINA", streamUrl: "https://server06.srvsh.com.br:8008/;?1789917491711", localImage: "latina.png", countryName: "Brasil", countryFlag: "br.png" },
+      { id: 7, name: "TECNO HOUSE", streamUrl: "https://stream.zeno.fm/6c2d25gk5gruv?1789920022127", localImage: "tecnohouse.png", countryName: "Brasil", countryFlag: "br.png" },
+      { id: 8, name: "GOSPEL", streamUrl: "https://stm11.xcast.com.br:10052/stream?1789920148018", localImage: "gospel.png", countryName: "Brasil", countryFlag: "br.png" },
+      { id: 9, name: "MPB", streamUrl: "https://sv11.hdradios.net:8152/stream?1789922687905", localImage: "mpb.png", countryName: "Brasil", countryFlag: "br.png" },
+      { id: 10, name: "RADIO RIO VERMELHO", streamUrl: "https://str1.streamhostpg.com.br:8030/stream", localImage: "rrv.png", countryName: "Brasil", countryFlag: "br.png" },
+      { id: 11, name: "FLASH DISCO DANCE", streamUrl: "https://stm1.srvif.com:21764/stream?1789923017551", localImage: "fdd.png", countryName: "Brasil", countryFlag: "br.png" },
+      { id: 12, name: "RADIO GALICIA", streamUrl: "https://srv6022.dns-lcinternet.com:8059/live", localImage: "galicia.png", countryName: "Espanha", countryFlag: "es.png" },
+      { id: 13, name: "BLUE MARLIN IBIZA", streamUrl: "https://ibizasonica.streaming-pro.com:8001/bluemarlin", localImage: "blue.png", countryName: "Espanha", countryFlag: "es.png" },
+      { id: 14, name: "los 40", streamUrl: "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_CLASSICAAC.aac", localImage: "los40.png", countryName: "Espanha", countryFlag: "es.png" },
+      { id: 15, name: "IBIZA GLOBAL", streamUrl: "https://listenssl.ibizaglobalradio.com:8024/stream", localImage: "ibiza.png", countryName: "Espanha", countryFlag: "es.png" },
+      { id: 16, name: "MUSIQUE CLASSIQUE", streamUrl: "https://icecast.radiofrance.fr/francemusique-hifi.aac", localImage: "classique.png", countryName: "França", countryFlag: "fr.png" },
+      { id: 17, name: "RADIO LATINA", streamUrl: "https://start-latina.ice.infomaniak.ch/start-latina-high.mp3", localImage: "rlatina.png", countryName: "França", countryFlag: "fr.png" },
+      { id: 18, name: "RAP FR", streamUrl: "https://generationfm-rap.ice.infomaniak.ch/generationfm-rap-high.mp3", localImage: "rapfr.png", countryName: "França", countryFlag: "fr.png" },
+      { id: 19, name: "SKYROCK", streamUrl: "https://icecast.skyrock.net/s/natio_aac_96k", localImage: "skyrock.png", countryName: "França", countryFlag: "fr.png" },
+      { id: 20, name: "NRJ", streamUrl: "https://streaming.nrjaudio.fm/oumvmk8fnozc?origine=radio.net", localImage: "nrj.png", countryName: "França", countryFlag: "fr.png" },
+      { id: 21, name: "RIRE & CHANSONS", streamUrl: "https://streaming.nrjaudio.fm/ou8o8xgk7oiu?origine=radio.net", localImage: "rir.png", countryName: "França", countryFlag: "fr.png" },
+      { id: 22, name: "DJ SENRA", streamUrl: "https://www.pacotedodj.com.br/radio/live-direct.mp3?v=1790090849", localImage: "senra.png", countryName: "djs", countryFlag: "djs.png" },
+      { id: 23, name: "Tomorrowland", streamUrl: "https://playerservices.streamtheworld.com/api/livestream-redirect/OWR_INTERNATIONAL_ADP.aac", localImage: "tomorrowland.png", countryName: "djs", countryFlag: "djs.png" },
+      { id: 24, name: "FG MIX TRANCE", streamUrl: "https://stream.rcs.revma.com/v025nezpey3vv.mp3", localImage: "fg.png", countryName: "djs", countryFlag: "djs.png" },
+      { id: 25, name: "dj Eddy", streamUrl: "https://stream.zeno.fm/k9gy85cgwy8uv?1789917104132", localImage: "djeddy.jpeg", countryName: "djs", countryFlag: "djs.png" },
+      { id: 26, name: "dj buzz", streamUrl: "https://stream.initialradio.fr:8443/djbuzz-192k.mp3", localImage: "djbuzz.png", countryName: "djs", countryFlag: "djs.png" },
+      { id: 27, name: "JAZZ & SOUL", streamUrl: "https://jazzradio.ice.infomaniak.ch/jazzradio-high.aac?aw_0_1st.playerId=jazzradio_web", localImage: "jazz.png", countryName: "França", countryFlag: "fr.png" },
+      { id: 28, name: "NTI NANTES", streamUrl: "https://manager11.streamradio.fr:3635/stream", localImage: "nti.png", countryName: "França", countryFlag: "fr.png" },
+      { id: 29, name: "flor fm", streamUrl: "https://florfm.ice.infomaniak.ch/webcolmar.mp3", localImage: "flor.png", countryName: "França", countryFlag: "fr.png" },
+      { id: 30, name: "nostalgie", streamUrl: "https://streaming.nrjaudio.fm/oug7girb92oc?origine=touteslesradios", localImage: "nostalgie.png", countryName: "França", countryFlag: "fr.png" },
+      { id: 31, name: "DJ CENTRAL", streamUrl: "https://streaming.inweb.com.br/centraldj", localImage: "djcentral.png", countryName: "djs", countryFlag: "djs.png" },
+      { id: 32, name: "Bossa Nova", streamUrl: "https://radio2.vip-radios.fm:18009/stream-128kmp3-BossaNovaBrazil", localImage: "bossa.png", countryName: "Brasil", countryFlag: "br.png" }
     ];
+
+    let apiSearchResultRadios = [];
+    let savedApiRadios = JSON.parse(localStorage.getItem('radio_saved_objects')) || [];
+    let favorites = JSON.parse(localStorage.getItem('radio_favs')) || [];
+    let searchTimeout = null;
 
     const mainContainer = document.getElementById('mainContainer');
     const audioPlayer = document.getElementById('audioPlayer');
@@ -564,9 +687,12 @@
     const vuLeft = document.getElementById('vuLeft');
     const vuRight = document.getElementById('vuRight');
     const cassetteLabel = document.getElementById('cassetteLabel');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const muteBtn = document.getElementById('muteBtn');
 
     const totalLeds = 15;
     let vuInterval = null;
+    let selectedCategory = 'ALL';
 
     function buildVuMeters() {
       const colors = [
@@ -615,23 +741,106 @@
       });
     }
 
+    function toggleFavorite(id, event) {
+      event.stopPropagation();
+      const allAvailable = [...localRadios, ...savedApiRadios, ...apiSearchResultRadios];
+      const targetRadio = allAvailable.find(r => String(r.id) === String(id));
+
+      if (favorites.includes(id)) {
+        favorites = favorites.filter(favId => String(favId) !== String(id));
+      } else {
+        favorites.push(id);
+        if (targetRadio && String(id).startsWith('api_')) {
+          const alreadySaved = savedApiRadios.some(r => String(r.id) === String(id));
+          if (!alreadySaved) {
+            savedApiRadios.push(targetRadio);
+            localStorage.setItem('radio_saved_objects', JSON.stringify(savedApiRadios));
+          }
+        }
+      }
+
+      localStorage.setItem('radio_favs', JSON.stringify(favorites));
+      renderRadios();
+    }
+
+    function handleSearchDebounce() {
+      clearTimeout(searchTimeout);
+      const query = document.getElementById('searchInput').value.trim();
+
+      if (query.length >= 2) {
+        searchTimeout = setTimeout(() => {
+          fetchGlobalRadios(query);
+        }, 400);
+      } else {
+        apiSearchResultRadios = [];
+        renderRadios();
+      }
+    }
+
+    async function fetchGlobalRadios(searchTerm) {
+      try {
+        const url = `https://de1.api.radio-browser.info/json/stations/search?name=${encodeURIComponent(searchTerm)}&limit=25&order=clickcount&reverse=true`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        apiSearchResultRadios = data.map(station => ({
+          id: `api_${station.stationuuid}`,
+          name: station.name.trim(),
+          streamUrl: station.url_resolved || station.url,
+          localImage: station.favicon && station.favicon.startsWith('http') ? station.favicon : 'logodj.png',
+          countryName: station.country ? station.country.trim() : 'Mundo',
+          countryFlag: 'globe.png'
+        }));
+      } catch (err) {
+        apiSearchResultRadios = [];
+      }
+      renderRadios();
+    }
+
     function renderRadios() {
       mainContainer.innerHTML = '';
+      const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+
+      // Unir as rádios locais com as rádios salvas e os resultados de busca sem duplicar
+      const map = new Map();
+      [...localRadios, ...savedApiRadios, ...apiSearchResultRadios].forEach(radio => {
+        map.set(String(radio.id), radio);
+      });
+      const allRadios = Array.from(map.values());
+
+      let filteredRadios = allRadios.filter(r => {
+        const isFav = favorites.includes(r.id);
+        const matchesSearch = r.name.toLowerCase().includes(searchQuery) || r.countryName.toLowerCase().includes(searchQuery);
+
+        if (selectedCategory === 'ALL') {
+          return matchesSearch;
+        }
+        if (selectedCategory === 'FAV') {
+          return isFav && matchesSearch;
+        }
+        return r.countryName.toLowerCase() === selectedCategory.toLowerCase() && matchesSearch;
+      });
+
+      if (filteredRadios.length === 0) {
+        mainContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">Nenhuma rádio encontrada.</p>`;
+        return;
+      }
 
       const groups = {};
-      radios.forEach(radio => {
-        if (!groups[radio.countryName]) {
-          groups[radio.countryName] = { flag: radio.countryFlag, items: [] };
+      filteredRadios.forEach(radio => {
+        const key = radio.countryName;
+        if (!groups[key]) {
+          groups[key] = { flag: radio.countryFlag || 'globe.png', items: [] };
         }
-        groups[radio.countryName].items.push(radio);
+        groups[key].items.push(radio);
       });
 
       const countryKeys = Object.keys(groups).sort((a, b) => {
-        const keyA = a.toUpperCase();
-        const keyB = b.toUpperCase();
-        if (keyA === 'DJS') return -1;
-        if (keyB === 'DJS') return 1;
-        return keyA.localeCompare(keyB);
+        if (a.toUpperCase() === 'BRASIL') return -1;
+        if (b.toUpperCase() === 'BRASIL') return 1;
+        if (a.toUpperCase() === 'DJS') return -1;
+        if (b.toUpperCase() === 'DJS') return 1;
+        return a.localeCompare(b);
       });
 
       countryKeys.forEach(countryName => {
@@ -644,7 +853,7 @@
         const countryHeader = document.createElement('h2');
         countryHeader.className = 'country-header';
         countryHeader.innerHTML = `
-          <img src="${group.flag}" alt="${countryName}" class="country-flag" onerror="this.style.display='none'">
+          <img src="${group.flag}" alt="${countryName}" class="country-flag" onerror="this.src='globe.png'">
           <span>${countryName}</span>
         `;
 
@@ -654,10 +863,11 @@
         group.items.forEach(radio => {
           const item = document.createElement('div');
           item.className = 'radio-item';
-          const safeName = radio.name.replace(/'/g, "\\'");
+          const isFav = favorites.includes(radio.id);
 
           item.innerHTML = `
-            <button class="realistic-btn" onclick="playRadio(this, '${radio.streamUrl}', '${safeName}')" title="Tocar ${radio.name}">
+            <span class="fav-star ${isFav ? 'active' : ''}" onclick="toggleFavorite('${radio.id}', event)">★</span>
+            <button class="realistic-btn" onclick="playRadio(this, '${radio.streamUrl}', '${radio.name.replace(/'/g, "\\'")}')" title="Tocar ${radio.name}">
               <img src="${radio.localImage}" alt="${radio.name}" onerror="this.src='logodj.png'">
             </button>
             <h3>${radio.name}</h3>
@@ -672,23 +882,34 @@
       });
     }
 
+    function filterCategory(cat, btn) {
+      selectedCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderRadios();
+    }
+
     function playRadio(buttonElement, url, name) {
       document.querySelectorAll('.radio-item').forEach(item => item.classList.remove('active'));
-      buttonElement.parentElement.classList.add('active');
+      if(buttonElement) buttonElement.parentElement.classList.add('active');
 
       audioPlayer.src = url;
-      audioPlayer.play();
+      statusText.innerText = 'CARREGANDO...';
       
       currentTitle.innerText = name;
       cassetteLabel.innerText = name;
-      statusText.innerHTML = `<span class="playing-pulse"></span> Lecture`;
-      
-      playerBarContainer.classList.add('playing');
-      playToggleBtn.classList.add('is-playing');
-      btnIcon.innerHTML = '&#10074;&#10074;';
-      btnText.innerText = 'PAUSE';
 
-      startVuMeter();
+      audioPlayer.play().then(() => {
+        statusText.innerHTML = `<span class="playing-pulse"></span> TOCANDO`;
+        playerBarContainer.classList.add('playing');
+        playToggleBtn.classList.add('is-playing');
+        btnIcon.innerHTML = '&#10074;&#10074;';
+        btnText.innerText = 'PAUSE';
+        startVuMeter();
+      }).catch(err => {
+        statusText.innerText = 'OFFLINE / ERRO';
+        stopVuMeter();
+      });
     }
 
     function togglePlay() {
@@ -712,6 +933,32 @@
         stopVuMeter();
       }
     }
+
+    function changeVolume(val) {
+      audioPlayer.volume = val;
+      if(val == 0) {
+        muteBtn.innerText = '🔇';
+      } else {
+        muteBtn.innerText = '🔊';
+      }
+    }
+
+    function toggleMute() {
+      if (audioPlayer.volume > 0) {
+        audioPlayer.volume = 0;
+        volumeSlider.value = 0;
+        muteBtn.innerText = '🔇';
+      } else {
+        audioPlayer.volume = 0.8;
+        volumeSlider.value = 0.8;
+        muteBtn.innerText = '🔊';
+      }
+    }
+
+    audioPlayer.onerror = function() {
+      statusText.innerText = 'ERRO NO STREAM';
+      stopVuMeter();
+    };
 
     buildVuMeters();
     renderRadios();
