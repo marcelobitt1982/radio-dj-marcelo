@@ -739,8 +739,15 @@
       const targetRadio = allAvailable.find(r => String(r.id) === String(id));
 
       if (favorites.includes(id)) {
+        // Remover dos favoritos
         favorites = favorites.filter(favId => String(favId) !== String(id));
+        // Se for rádio da API, remove completamente do cache permanente
+        if (String(id).startsWith('api_')) {
+          savedApiRadios = savedApiRadios.filter(r => String(r.id) !== String(id));
+          localStorage.setItem('radio_saved_objects', JSON.stringify(savedApiRadios));
+        }
       } else {
+        // Adicionar aos favoritos
         favorites.push(id);
         if (targetRadio && String(id).startsWith('api_')) {
           const alreadySaved = savedApiRadios.some(r => String(r.id) === String(id));
@@ -792,7 +799,7 @@
       mainContainer.innerHTML = '';
       const searchQuery = document.getElementById('searchInput').value.toLowerCase();
 
-      // Unir as rádios locais com as rádios salvas e os resultados de busca sem duplicar
+      // Unir rádios locais com salvas e busca atual
       const map = new Map();
       [...localRadios, ...savedApiRadios, ...apiSearchResultRadios].forEach(radio => {
         map.set(String(radio.id), radio);
@@ -817,7 +824,7 @@
         return;
       }
 
-      // Se estiver na aba FAVORITOS, coloca TODAS numa única grade unificada sem separar por país
+      // Se estiver na aba FAVORITOS
       if (selectedCategory === 'FAV') {
         filteredRadios.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -853,7 +860,7 @@
         return;
       }
 
-      // Caso contrário (Todas, Brasil, França, etc.), agrupa por categoria/país sem ícone de bandeira
+      // Para outras categorias (Todas, Brasil, Espanha, etc.)
       const groups = {};
       filteredRadios.forEach(radio => {
         const key = radio.countryName;
