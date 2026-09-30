@@ -388,14 +388,6 @@
       font-size: 1.1rem;
     }
 
-    .country-flag {
-      width: 28px;
-      height: 20px;
-      object-fit: cover;
-      border-radius: 3px;
-      box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
-    }
-
     .grid-radios {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
@@ -637,38 +629,38 @@
 
   <script>
     const localRadios = [
-      { id: 1, name: "ROCK", streamUrl: "https://stream.rockantenne.de/90er-rock/stream/mp3?aw_0_1st.playerid=radio.de", localImage: "rock.png", countryName: "Brasil", countryFlag: "br.png" },
-      { id: 2, name: "FORRO", streamUrl: "https://stm5.xcast.com.br:10684/wfai?1789917171675", localImage: "forro.png", countryName: "Brasil", countryFlag: "br.png" },
-      { id: 3, name: "MODÃO", streamUrl: "https://s22.maxcast.com.br:8034/live?17899172669343", localImage: "modao.png", countryName: "Brasil", countryFlag: "br.png" },
-      { id: 4, name: "SERTANEJO", streamUrl: "https://centova5.transmissaodigital.com:20042/stream?1789917354447", localImage: "sertanejo.png", countryName: "Brasil", countryFlag: "br.png" },
-      { id: 5, name: "ROCK NACIONAL", streamUrl: "https://stm1.painelvox.xyz:6696/steam?1789917407173", localImage: "rocknac.png", countryName: "Brasil", countryFlag: "br.png" },
-      { id: 6, name: "LATINA", streamUrl: "https://server06.srvsh.com.br:8008/;?1789917491711", localImage: "latina.png", countryName: "Brasil", countryFlag: "br.png" },
-      { id: 7, name: "TECNO HOUSE", streamUrl: "https://stream.zeno.fm/6c2d25gk5gruv?1789920022127", localImage: "tecnohouse.png", countryName: "Brasil", countryFlag: "br.png" },
-      { id: 8, name: "GOSPEL", streamUrl: "https://stm11.xcast.com.br:10052/stream?1789920148018", localImage: "gospel.png", countryName: "Brasil", countryFlag: "br.png" },
-      { id: 9, name: "MPB", streamUrl: "https://sv11.hdradios.net:8152/stream?1789922687905", localImage: "mpb.png", countryName: "Brasil", countryFlag: "br.png" },
-      { id: 10, name: "RADIO RIO VERMELHO", streamUrl: "https://str1.streamhostpg.com.br:8030/stream", localImage: "rrv.png", countryName: "Brasil", countryFlag: "br.png" },
-      { id: 11, name: "FLASH DISCO DANCE", streamUrl: "https://stm1.srvif.com:21764/stream?1789923017551", localImage: "fdd.png", countryName: "Brasil", countryFlag: "br.png" },
-      { id: 12, name: "RADIO GALICIA", streamUrl: "https://srv6022.dns-lcinternet.com:8059/live", localImage: "galicia.png", countryName: "Espanha", countryFlag: "es.png" },
-      { id: 13, name: "BLUE MARLIN IBIZA", streamUrl: "https://ibizasonica.streaming-pro.com:8001/bluemarlin", localImage: "blue.png", countryName: "Espanha", countryFlag: "es.png" },
-      { id: 14, name: "los 40", streamUrl: "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_CLASSICAAC.aac", localImage: "los40.png", countryName: "Espanha", countryFlag: "es.png" },
-      { id: 15, name: "IBIZA GLOBAL", streamUrl: "https://listenssl.ibizaglobalradio.com:8024/stream", localImage: "ibiza.png", countryName: "Espanha", countryFlag: "es.png" },
-      { id: 16, name: "MUSIQUE CLASSIQUE", streamUrl: "https://icecast.radiofrance.fr/francemusique-hifi.aac", localImage: "classique.png", countryName: "França", countryFlag: "fr.png" },
-      { id: 17, name: "RADIO LATINA", streamUrl: "https://start-latina.ice.infomaniak.ch/start-latina-high.mp3", localImage: "rlatina.png", countryName: "França", countryFlag: "fr.png" },
-      { id: 18, name: "RAP FR", streamUrl: "https://generationfm-rap.ice.infomaniak.ch/generationfm-rap-high.mp3", localImage: "rapfr.png", countryName: "França", countryFlag: "fr.png" },
-      { id: 19, name: "SKYROCK", streamUrl: "https://icecast.skyrock.net/s/natio_aac_96k", localImage: "skyrock.png", countryName: "França", countryFlag: "fr.png" },
-      { id: 20, name: "NRJ", streamUrl: "https://streaming.nrjaudio.fm/oumvmk8fnozc?origine=radio.net", localImage: "nrj.png", countryName: "França", countryFlag: "fr.png" },
-      { id: 21, name: "RIRE & CHANSONS", streamUrl: "https://streaming.nrjaudio.fm/ou8o8xgk7oiu?origine=radio.net", localImage: "rir.png", countryName: "França", countryFlag: "fr.png" },
-      { id: 22, name: "DJ SENRA", streamUrl: "https://www.pacotedodj.com.br/radio/live-direct.mp3?v=1790090849", localImage: "senra.png", countryName: "djs", countryFlag: "djs.png" },
-      { id: 23, name: "Tomorrowland", streamUrl: "https://playerservices.streamtheworld.com/api/livestream-redirect/OWR_INTERNATIONAL_ADP.aac", localImage: "tomorrowland.png", countryName: "djs", countryFlag: "djs.png" },
-      { id: 24, name: "FG MIX TRANCE", streamUrl: "https://stream.rcs.revma.com/v025nezpey3vv.mp3", localImage: "fg.png", countryName: "djs", countryFlag: "djs.png" },
-      { id: 25, name: "dj Eddy", streamUrl: "https://stream.zeno.fm/k9gy85cgwy8uv?1789917104132", localImage: "djeddy.jpeg", countryName: "djs", countryFlag: "djs.png" },
-      { id: 26, name: "dj buzz", streamUrl: "https://stream.initialradio.fr:8443/djbuzz-192k.mp3", localImage: "djbuzz.png", countryName: "djs", countryFlag: "djs.png" },
-      { id: 27, name: "JAZZ & SOUL", streamUrl: "https://jazzradio.ice.infomaniak.ch/jazzradio-high.aac?aw_0_1st.playerId=jazzradio_web", localImage: "jazz.png", countryName: "França", countryFlag: "fr.png" },
-      { id: 28, name: "NTI NANTES", streamUrl: "https://manager11.streamradio.fr:3635/stream", localImage: "nti.png", countryName: "França", countryFlag: "fr.png" },
-      { id: 29, name: "flor fm", streamUrl: "https://florfm.ice.infomaniak.ch/webcolmar.mp3", localImage: "flor.png", countryName: "França", countryFlag: "fr.png" },
-      { id: 30, name: "nostalgie", streamUrl: "https://streaming.nrjaudio.fm/oug7girb92oc?origine=touteslesradios", localImage: "nostalgie.png", countryName: "França", countryFlag: "fr.png" },
-      { id: 31, name: "DJ CENTRAL", streamUrl: "https://streaming.inweb.com.br/centraldj", localImage: "djcentral.png", countryName: "djs", countryFlag: "djs.png" },
-      { id: 32, name: "Bossa Nova", streamUrl: "https://radio2.vip-radios.fm:18009/stream-128kmp3-BossaNovaBrazil", localImage: "bossa.png", countryName: "Brasil", countryFlag: "br.png" }
+      { id: 1, name: "ROCK", streamUrl: "https://stream.rockantenne.de/90er-rock/stream/mp3?aw_0_1st.playerid=radio.de", localImage: "rock.png", countryName: "Brasil" },
+      { id: 2, name: "FORRO", streamUrl: "https://stm5.xcast.com.br:10684/wfai?1789917171675", localImage: "forro.png", countryName: "Brasil" },
+      { id: 3, name: "MODÃO", streamUrl: "https://s22.maxcast.com.br:8034/live?17899172669343", localImage: "modao.png", countryName: "Brasil" },
+      { id: 4, name: "SERTANEJO", streamUrl: "https://centova5.transmissaodigital.com:20042/stream?1789917354447", localImage: "sertanejo.png", countryName: "Brasil" },
+      { id: 5, name: "ROCK NACIONAL", streamUrl: "https://stm1.painelvox.xyz:6696/steam?1789917407173", localImage: "rocknac.png", countryName: "Brasil" },
+      { id: 6, name: "LATINA", streamUrl: "https://server06.srvsh.com.br:8008/;?1789917491711", localImage: "latina.png", countryName: "Brasil" },
+      { id: 7, name: "TECNO HOUSE", streamUrl: "https://stream.zeno.fm/6c2d25gk5gruv?1789920022127", localImage: "tecnohouse.png", countryName: "Brasil" },
+      { id: 8, name: "GOSPEL", streamUrl: "https://stm11.xcast.com.br:10052/stream?1789920148018", localImage: "gospel.png", countryName: "Brasil" },
+      { id: 9, name: "MPB", streamUrl: "https://sv11.hdradios.net:8152/stream?1789922687905", localImage: "mpb.png", countryName: "Brasil" },
+      { id: 10, name: "RADIO RIO VERMELHO", streamUrl: "https://str1.streamhostpg.com.br:8030/stream", localImage: "rrv.png", countryName: "Brasil" },
+      { id: 11, name: "FLASH DISCO DANCE", streamUrl: "https://stm1.srvif.com:21764/stream?1789923017551", localImage: "fdd.png", countryName: "Brasil" },
+      { id: 12, name: "RADIO GALICIA", streamUrl: "https://srv6022.dns-lcinternet.com:8059/live", localImage: "galicia.png", countryName: "Espanha" },
+      { id: 13, name: "BLUE MARLIN IBIZA", streamUrl: "https://ibizasonica.streaming-pro.com:8001/bluemarlin", localImage: "blue.png", countryName: "Espanha" },
+      { id: 14, name: "los 40", streamUrl: "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_CLASSICAAC.aac", localImage: "los40.png", countryName: "Espanha" },
+      { id: 15, name: "IBIZA GLOBAL", streamUrl: "https://listenssl.ibizaglobalradio.com:8024/stream", localImage: "ibiza.png", countryName: "Espanha" },
+      { id: 16, name: "MUSIQUE CLASSIQUE", streamUrl: "https://icecast.radiofrance.fr/francemusique-hifi.aac", localImage: "classique.png", countryName: "França" },
+      { id: 17, name: "RADIO LATINA", streamUrl: "https://start-latina.ice.infomaniak.ch/start-latina-high.mp3", localImage: "rlatina.png", countryName: "França" },
+      { id: 18, name: "RAP FR", streamUrl: "https://generationfm-rap.ice.infomaniak.ch/generationfm-rap-high.mp3", localImage: "rapfr.png", countryName: "França" },
+      { id: 19, name: "SKYROCK", streamUrl: "https://icecast.skyrock.net/s/natio_aac_96k", localImage: "skyrock.png", countryName: "França" },
+      { id: 20, name: "NRJ", streamUrl: "https://streaming.nrjaudio.fm/oumvmk8fnozc?origine=radio.net", localImage: "nrj.png", countryName: "França" },
+      { id: 21, name: "RIRE & CHANSONS", streamUrl: "https://streaming.nrjaudio.fm/ou8o8xgk7oiu?origine=radio.net", localImage: "rir.png", countryName: "França" },
+      { id: 22, name: "DJ SENRA", streamUrl: "https://www.pacotedodj.com.br/radio/live-direct.mp3?v=1790090849", localImage: "senra.png", countryName: "djs" },
+      { id: 23, name: "Tomorrowland", streamUrl: "https://playerservices.streamtheworld.com/api/livestream-redirect/OWR_INTERNATIONAL_ADP.aac", localImage: "tomorrowland.png", countryName: "djs" },
+      { id: 24, name: "FG MIX TRANCE", streamUrl: "https://stream.rcs.revma.com/v025nezpey3vv.mp3", localImage: "fg.png", countryName: "djs" },
+      { id: 25, name: "dj Eddy", streamUrl: "https://stream.zeno.fm/k9gy85cgwy8uv?1789917104132", localImage: "djeddy.jpeg", countryName: "djs" },
+      { id: 26, name: "dj buzz", streamUrl: "https://stream.initialradio.fr:8443/djbuzz-192k.mp3", localImage: "djbuzz.png", countryName: "djs" },
+      { id: 27, name: "JAZZ & SOUL", streamUrl: "https://jazzradio.ice.infomaniak.ch/jazzradio-high.aac?aw_0_1st.playerId=jazzradio_web", localImage: "jazz.png", countryName: "França" },
+      { id: 28, name: "NTI NANTES", streamUrl: "https://manager11.streamradio.fr:3635/stream", localImage: "nti.png", countryName: "França" },
+      { id: 29, name: "flor fm", streamUrl: "https://florfm.ice.infomaniak.ch/webcolmar.mp3", localImage: "flor.png", countryName: "França" },
+      { id: 30, name: "nostalgie", streamUrl: "https://streaming.nrjaudio.fm/oug7girb92oc?origine=touteslesradios", localImage: "nostalgie.png", countryName: "França" },
+      { id: 31, name: "DJ CENTRAL", streamUrl: "https://streaming.inweb.com.br/centraldj", localImage: "djcentral.png", countryName: "djs" },
+      { id: 32, name: "Bossa Nova", streamUrl: "https://radio2.vip-radios.fm:18009/stream-128kmp3-BossaNovaBrazil", localImage: "bossa.png", countryName: "Brasil" }
     ];
 
     let apiSearchResultRadios = [];
@@ -788,8 +780,7 @@
           name: station.name.trim(),
           streamUrl: station.url_resolved || station.url,
           localImage: station.favicon && station.favicon.startsWith('http') ? station.favicon : 'logodj.png',
-          countryName: station.country ? station.country.trim() : 'Mundo',
-          countryFlag: 'globe.png'
+          countryName: station.country ? station.country.trim() : 'Mundo'
         }));
       } catch (err) {
         apiSearchResultRadios = [];
@@ -826,11 +817,48 @@
         return;
       }
 
+      // Se estiver na aba FAVORITOS, coloca TODAS numa única grade unificada sem separar por país
+      if (selectedCategory === 'FAV') {
+        filteredRadios.sort((a, b) => a.name.localeCompare(b.name));
+
+        const section = document.createElement('section');
+        section.className = 'country-section';
+
+        const header = document.createElement('h2');
+        header.className = 'country-header';
+        header.innerHTML = `<span>⭐ MINHAS RÁDIOS FAVORITAS (${filteredRadios.length})</span>`;
+
+        const radioGrid = document.createElement('div');
+        radioGrid.className = 'grid-radios';
+
+        filteredRadios.forEach(radio => {
+          const item = document.createElement('div');
+          item.className = 'radio-item';
+          const isFav = favorites.includes(radio.id);
+
+          item.innerHTML = `
+            <span class="fav-star ${isFav ? 'active' : ''}" onclick="toggleFavorite('${radio.id}', event)">★</span>
+            <button class="realistic-btn" onclick="playRadio(this, '${radio.streamUrl}', '${radio.name.replace(/'/g, "\\'")}')" title="Tocar ${radio.name}">
+              <img src="${radio.localImage}" alt="${radio.name}" onerror="this.src='logodj.png'">
+            </button>
+            <h3>${radio.name}</h3>
+          `;
+
+          radioGrid.appendChild(item);
+        });
+
+        section.appendChild(header);
+        section.appendChild(radioGrid);
+        mainContainer.appendChild(section);
+        return;
+      }
+
+      // Caso contrário (Todas, Brasil, França, etc.), agrupa por categoria/país sem ícone de bandeira
       const groups = {};
       filteredRadios.forEach(radio => {
         const key = radio.countryName;
         if (!groups[key]) {
-          groups[key] = { flag: radio.countryFlag || 'globe.png', items: [] };
+          groups[key] = { items: [] };
         }
         groups[key].items.push(radio);
       });
@@ -852,10 +880,7 @@
 
         const countryHeader = document.createElement('h2');
         countryHeader.className = 'country-header';
-        countryHeader.innerHTML = `
-          <img src="${group.flag}" alt="${countryName}" class="country-flag" onerror="this.src='globe.png'">
-          <span>${countryName}</span>
-        `;
+        countryHeader.innerHTML = `<span>${countryName}</span>`;
 
         const radioGrid = document.createElement('div');
         radioGrid.className = 'grid-radios';
