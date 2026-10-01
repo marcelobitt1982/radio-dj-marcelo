@@ -992,21 +992,6 @@
     buildVuMeters();
     renderRadios();
   </script>
-
-<span>Total de visitas: <strong id="contador-global">Carregando...</strong></span>
-
-<!-- SCRIPT -->
-<script>
-  // Troque 'meu-site-unico-123' por um identificador exclusivo do seu projeto
-  fetch('https://api.counterapi.dev/v1/meu-site-unico-123/visitas/up')
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('contador-global').textContent = data.count;
-    })
-    .catch(() => {
-      document.getElementById('contador-global').textContent = '--';
-    });
-</script>
-
+  
 </body>
 </html>
