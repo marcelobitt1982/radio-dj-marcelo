@@ -103,14 +103,14 @@
     .player-bar {
       position: sticky;
       top: 0;
-      background: #020712;
+      background: #000000;
       border-bottom: 2px solid var(--primary);
       padding: 0.5rem 0.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 5px 20px rgba(0, 210, 255, 0.25);
+      box-shadow: none;
       z-index: 100;
       width: 100%;
     }
@@ -118,13 +118,16 @@
     .top-logo-container {
       margin-bottom: 0.4rem;
       text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .top-logo {
       height: 80px;
       max-width: 380px;
       object-fit: contain;
-      filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.6));
+      filter: none;
     }
 
     .video-player-container {
@@ -587,7 +590,8 @@
 
   <div class="player-bar" id="playerBarContainer">
     <div class="top-logo-container">
-      <img src="logodj.png" alt="Rádio DJ Marcelo" class="top-logo">
+      <!-- Logo alterada para o arquivo GIF animado -->
+      <img src="logo-radio.gif" alt="Rádio DJ Marcelo" class="top-logo">
     </div>
 
     <div class="video-player-container">
@@ -796,7 +800,7 @@
           id: `api_${station.stationuuid}`,
           name: station.name.trim(),
           streamUrl: station.url_resolved || station.url,
-          localImage: station.favicon && station.favicon.startsWith('http') ? station.favicon : 'logodj.png',
+          localImage: station.favicon && station.favicon.startsWith('http') ? station.favicon : 'logodj.gif',
           countryName: station.country ? station.country.trim() : 'Mundo'
         }));
       } catch (err) {
@@ -813,7 +817,7 @@
       item.innerHTML = `
         <span class="fav-star ${isFav ? 'active' : ''}" onclick="toggleFavorite('${radio.id}', event)">★</span>
         <button class="realistic-btn" onclick="playRadio(this, '${radio.streamUrl}', '${radio.name.replace(/'/g, "\\'")}')" title="Tocar ${radio.name}">
-          <img src="${radio.localImage}" alt="${radio.name}" onerror="this.src='logodj.png'">
+          <img src="${radio.localImage}" alt="${radio.name}" onerror="this.src='logodj.gif'">
         </button>
         <span class="radio-origin-label">${radio.countryName || 'Mundo'}</span>
         <h3>${radio.name}</h3>
