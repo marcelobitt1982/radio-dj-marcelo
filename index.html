@@ -33,6 +33,88 @@
       overflow-x: hidden;
     }
 
+    /* ESTILOS DA TELA DE ENTRADA (SPLASH SCREEN) - VÍDEO INTEIRO NA TELA */
+    #intro-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000000;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #intro-screen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .intro-media-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background: #000;
+    }
+
+    /* object-fit: contain garante o vídeo inteiro sem cortes, gerando as tarjas pretas */
+    .intro-media-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .intro-overlay-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+      padding: 3rem 1.5rem;
+      pointer-events: none; /* Deixa cliques passarem para o vídeo se necessário */
+    }
+
+    .intro-logo {
+      height: 90px;
+      max-width: 350px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 15px var(--primary-glow));
+      pointer-events: auto;
+    }
+
+    .intro-btn {
+      background: linear-gradient(135deg, var(--primary) 0%, #0055ff 100%);
+      color: #fff;
+      border: none;
+      outline: none;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 0.8rem 2.5rem;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 20px var(--primary-glow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      pointer-events: auto;
+    }
+
+    .intro-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px var(--primary);
+    }
+
     /* Fundo dinâmico com ondas em tons de azul */
     .bg-waves {
       position: fixed;
@@ -145,16 +227,17 @@
       height: 145px;
       border-radius: 8px;
       overflow: hidden;
-      background: transparent;
+      background: #000; /* Fundo preto para formar as tarjas se necessário */
       border: none;
       box-shadow: none;
       flex-shrink: 0;
     }
 
+    /* object-fit: contain garante o vídeo inteiro na caixinha do player do topo */
     .dj-video {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
     }
 
@@ -582,6 +665,19 @@
 
 <body>
 
+  <!-- TELA DE ENTRADA (SPLASH SCREEN) - VÍDEO INTEIRO NA TELA COM FAIXAS PRETAS AUTOMÁTICAS -->
+  <div id="intro-screen">
+    <div class="intro-media-wrapper">
+      <video autoplay loop muted playsinline>
+        <source src="marcelo.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="intro-overlay-content">
+      <img src="logo-radio.gif" alt="Rádio DJ Marcelo" class="intro-logo">
+      <button class="intro-btn" onclick="fecharIntro()">Entrar na Rádio</button>
+    </div>
+  </div>
+
   <div class="bg-waves">
     <div class="wave-blob wave-1"></div>
     <div class="wave-blob wave-2"></div>
@@ -590,17 +686,17 @@
 
   <div class="player-bar" id="playerBarContainer">
     <div class="top-logo-container">
-      <!-- Logo alterada para o arquivo GIF animado -->
       <img src="logo-radio.gif" alt="Rádio DJ Marcelo" class="top-logo">
     </div>
 
     <div class="video-player-container">
       <div class="vu-meter-tower" id="vuLeft"></div>
 
+      <!-- VÍDEO DO PLAYER DO TOPO - TAMBÉM INTEIRO COM object-fit: contain -->
       <div class="dj-video-wrapper">
         <div class="cassette-label" id="cassetteLabel">SELECIONE UMA RÁDIO</div>
         <video class="dj-video" autoplay loop muted playsinline>
-          <source src="ddj.mp4" type="video/mp4">
+          <source src="marcelo.mp4" type="video/mp4">
         </video>
       </div>
 
@@ -629,7 +725,6 @@
       <input type="text" id="searchInput" class="search-input" placeholder="🔍 Procure o estilo da sua música..." oninput="handleSearchDebounce()">
     </div>
 
-    <!-- ABAS SEPARADAS SOLICITADAS -->
     <div class="category-filter">
       <button class="cat-btn active" onclick="filterCategory('ALL', this)">Todas</button>
       <button class="cat-btn" onclick="filterCategory('FAV', this)">⭐ Favoritas</button>
@@ -645,6 +740,21 @@
   <main id="mainContainer"></main>
 
   <script>
+    function fecharIntro() {
+      const intro = document.getElementById('intro-screen');
+      if (intro) {
+        intro.classList.add('fade-out');
+        setTimeout(() => intro.remove(), 600);
+      }
+    }
+
+    // Fecha automaticamente após 3 segundos se o usuário não clicar
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        fecharIntro();
+      }, 3000);
+    });
+
     const localRadios = [
       { id: 1, name: "ROCK", streamUrl: "https://stream.rockantenne.de/90er-rock/stream/mp3?aw_0_1st.playerid=radio.de", localImage: "rock.png", countryName: "Brasil" },
       { id: 2, name: "FORRO", streamUrl: "https://stm5.xcast.com.br:10684/wfai?1789917171675", localImage: "forro.png", countryName: "Brasil" },
@@ -853,20 +963,17 @@
       mainContainer.innerHTML = '';
       const searchQuery = document.getElementById('searchInput').value.toLowerCase();
 
-      // Mapeia todas as rádios únicas
       const map = new Map();
       [...localRadios, ...savedApiRadios, ...apiSearchResultRadios].forEach(radio => {
         map.set(String(radio.id), radio);
       });
       const allRadios = Array.from(map.values());
 
-      // Filtra por busca caso digitado algo
       const searchFiltered = allRadios.filter(r => 
         r.name.toLowerCase().includes(searchQuery) || 
         r.countryName.toLowerCase().includes(searchQuery)
       );
 
-      // 1. VISUALIZAÇÃO ABA FAVORITAS (Única lista)
       if (selectedCategory === 'FAV') {
         const favRadios = searchFiltered.filter(r => favorites.includes(r.id));
         if (favRadios.length === 0) {
@@ -877,7 +984,6 @@
         return;
       }
 
-      // 2. SELEÇÃO DE CATEGORIA ESPECÍFICA (DJs, Brasil, Espanha, França)
       if (selectedCategory !== 'ALL') {
         const categoryRadios = searchFiltered.filter(r => r.countryName.toLowerCase() === selectedCategory.toLowerCase());
         if (categoryRadios.length === 0) {
@@ -888,20 +994,16 @@
         return;
       }
 
-      // 3. VISUALIZAÇÃO "TODAS"
-      // Se tiver rádio em favoritos, exibe o bloco no topo
       const favRadiosAll = searchFiltered.filter(r => favorites.includes(r.id));
       if (favRadiosAll.length > 0 && searchQuery === '') {
         renderCategorySection('⭐ FAVORITOS', favRadiosAll);
       }
 
-      // Se houver pesquisa, mostra resultado direto
       if (searchQuery !== '') {
         renderCategorySection('RESULTADOS DA BUSCA', searchFiltered);
         return;
       }
 
-      // Separado por cada categoria conforme solicitado:
       const djsRadios = searchFiltered.filter(r => r.countryName.toLowerCase() === 'djs');
       const brasilRadios = searchFiltered.filter(r => r.countryName.toLowerCase() === 'brasil');
       const espanhaRadios = searchFiltered.filter(r => r.countryName.toLowerCase() === 'espanha');
