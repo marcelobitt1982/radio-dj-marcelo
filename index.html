@@ -33,7 +33,7 @@
       overflow-x: hidden;
     }
 
-    /* ESTILOS DA TELA DE ENTRADA (SPLASH SCREEN) - VÍDEO INTEIRO NA TELA */
+    /* TELA DE ENTRADA (SPLASH SCREEN) - VÍDEO INTEIRO EM LOOP */
     #intro-screen {
       position: fixed;
       top: 0;
@@ -47,6 +47,7 @@
       align-items: center;
       justify-content: center;
       transition: opacity 0.6s ease, visibility 0.6s ease;
+      cursor: pointer; /* Indica que pode clicar para fechar a tela de entrada */
     }
 
     #intro-screen.fade-out {
@@ -70,49 +71,6 @@
       height: 100%;
       object-fit: contain;
       display: block;
-    }
-
-    .intro-overlay-content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      height: 100%;
-      width: 100%;
-      padding: 3rem 1.5rem;
-      pointer-events: none; /* Deixa cliques passarem para o vídeo se necessário */
-    }
-
-    .intro-logo {
-      height: 90px;
-      max-width: 350px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 15px var(--primary-glow));
-      pointer-events: auto;
-    }
-
-    .intro-btn {
-      background: linear-gradient(135deg, var(--primary) 0%, #0055ff 100%);
-      color: #fff;
-      border: none;
-      outline: none;
-      font-weight: bold;
-      font-size: 1rem;
-      padding: 0.8rem 2.5rem;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 0 20px var(--primary-glow);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      pointer-events: auto;
-    }
-
-    .intro-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px var(--primary);
     }
 
     /* Fundo dinâmico com ondas em tons de azul */
@@ -227,13 +185,12 @@
       height: 145px;
       border-radius: 8px;
       overflow: hidden;
-      background: #000; /* Fundo preto para formar as tarjas se necessário */
+      background: #000;
       border: none;
       box-shadow: none;
       flex-shrink: 0;
     }
 
-    /* object-fit: contain garante o vídeo inteiro na caixinha do player do topo */
     .dj-video {
       width: 100%;
       height: 100%;
@@ -665,16 +622,12 @@
 
 <body>
 
-  <!-- TELA DE ENTRADA (SPLASH SCREEN) - VÍDEO INTEIRO NA TELA COM FAIXAS PRETAS AUTOMÁTICAS -->
-  <div id="intro-screen">
+  <!-- TELA DE ENTRADA (SPLASH SCREEN) - VÍDEO INTEIRO EM LOOP (Fecha ao clicar ou após 3.5 segundos) -->
+  <div id="intro-screen" onclick="fecharIntro()">
     <div class="intro-media-wrapper">
       <video autoplay loop muted playsinline>
         <source src="marcelo.mp4" type="video/mp4">
       </video>
-    </div>
-    <div class="intro-overlay-content">
-      <img src="logo-radio.gif" alt="Rádio DJ Marcelo" class="intro-logo">
-      <button class="intro-btn" onclick="fecharIntro()">Entrar na Rádio</button>
     </div>
   </div>
 
@@ -684,15 +637,12 @@
     <div class="wave-blob wave-3"></div>
   </div>
 
-  <div class="player-bar" id="playerBarContainer">
-    <div class="top-logo-container">
-      <img src="logo-radio.gif" alt="Rádio DJ Marcelo" class="top-logo">
-    </div>
+  
 
     <div class="video-player-container">
       <div class="vu-meter-tower" id="vuLeft"></div>
 
-      <!-- VÍDEO DO PLAYER DO TOPO - TAMBÉM INTEIRO COM object-fit: contain -->
+      <!-- VÍDEO DO PLAYER DO TOPO -->
       <div class="dj-video-wrapper">
         <div class="cassette-label" id="cassetteLabel">SELECIONE UMA RÁDIO</div>
         <video class="dj-video" autoplay loop muted playsinline>
@@ -748,11 +698,11 @@
       }
     }
 
-    // Fecha automaticamente após 3 segundos se o usuário não clicar
+    // Fecha a tela de entrada automaticamente após 3.5 segundos (ou o usuário pode clicar em qualquer lugar da tela para fechar na hora)
     window.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         fecharIntro();
-      }, 3000);
+      }, 3500);
     });
 
     const localRadios = [
