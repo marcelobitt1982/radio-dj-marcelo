@@ -33,7 +33,7 @@
       overflow-x: hidden;
     }
 
-    /* TELA DE ENTRADA (SPLASH SCREEN) - VÍDEO INTEIRO EM LOOP */
+    /* TELA DE ENTRADA (SPLASH SCREEN) - VÍDEO CENTRALIZADO E INTEIRO */
     #intro-screen {
       position: fixed;
       top: 0;
@@ -43,11 +43,10 @@
       background: #000000;
       z-index: 9999;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       transition: opacity 0.6s ease, visibility 0.6s ease;
-      cursor: pointer; /* Indica que pode clicar para fechar a tela de entrada */
+      cursor: pointer;
     }
 
     #intro-screen.fade-out {
@@ -56,16 +55,16 @@
     }
 
     .intro-media-wrapper {
-      position: absolute;
-      top: 0;
-      left: 0;
+      position: relative;
       width: 100%;
       height: 100%;
-      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: #000;
     }
 
-    /* object-fit: contain garante o vídeo inteiro sem cortes, gerando as tarjas pretas */
+    /* object-fit: contain combinado com flexbox centraliza perfeitamente e evita o alinhamento à esquerda */
     .intro-media-wrapper video {
       width: 100%;
       height: 100%;
@@ -153,21 +152,6 @@
       box-shadow: none;
       z-index: 100;
       width: 100%;
-    }
-
-    .top-logo-container {
-      margin-bottom: 0.4rem;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .top-logo {
-      height: 80px;
-      max-width: 380px;
-      object-fit: contain;
-      filter: none;
     }
 
     .video-player-container {
@@ -580,11 +564,6 @@
     }
 
     @media (max-width: 480px) {
-      .top-logo {
-        height: 60px;
-        max-width: 260px;
-      }
-
       .dj-video-wrapper {
         width: 180px;
         height: 100px;
@@ -622,7 +601,7 @@
 
 <body>
 
-  <!-- TELA DE ENTRADA (SPLASH SCREEN) - VÍDEO INTEIRO EM LOOP (Fecha ao clicar ou após 3.5 segundos) -->
+  <!-- TELA DE ENTRADA (SPLASH SCREEN) - VÍDEO INTEIRO E PERFEITAMENTE CENTRALIZADO -->
   <div id="intro-screen" onclick="fecharIntro()">
     <div class="intro-media-wrapper">
       <video autoplay loop muted playsinline>
@@ -637,8 +616,7 @@
     <div class="wave-blob wave-3"></div>
   </div>
 
-  
-
+  <div class="player-bar" id="playerBarContainer">
     <div class="video-player-container">
       <div class="vu-meter-tower" id="vuLeft"></div>
 
