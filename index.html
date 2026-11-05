@@ -6,7 +6,7 @@
   <title>Rádio DJ Marcelo</title>
   <style>
     :root {
-      --bg-color: #030a16;
+      --bg-color: #000000;      /* Fundo alterado para preto absoluto */
       --primary: #00d2ff;       /* Cyan Bright */
       --secondary: #0072ff;     /* Azul Électrico */
       --primary-glow: rgba(0, 210, 255, 0.4);
@@ -71,7 +71,7 @@
       display: block;
     }
 
-    /* Fundo dinâmico com ondas em tons de azul */
+    /* Fundo dinâmico com ondas em tons de azul preservadas sobre o fundo preto */
     .bg-waves {
       position: fixed;
       top: 0;
@@ -87,7 +87,7 @@
       position: absolute;
       border-radius: 50%;
       filter: blur(80px);
-      opacity: 0.55;
+      opacity: 0.45; /* Leve ajuste na opacidade para realçar o contraste com o preto */
       animation-iteration-count: infinite;
       animation-direction: alternate;
       animation-timing-function: ease-in-out;
@@ -184,7 +184,7 @@
     .vu-meter-tower {
       width: 16px;
       height: 145px;
-      background: #040d1a;
+      background: #000000;
       border: 1px solid rgba(0, 210, 255, 0.3);
       border-radius: 4px;
       padding: 2px;
@@ -232,7 +232,7 @@
       max-width: 600px;
       margin-top: 0.5rem;
       padding: 0.4rem 0.8rem;
-      background: rgba(4, 18, 36, 0.85);
+      background: rgba(0, 0, 0, 0.85);
       border-radius: 6px;
       border: 1px solid rgba(0, 210, 255, 0.25);
       gap: 10px;
@@ -335,7 +335,7 @@
       padding: 0.6rem 1rem;
       border-radius: 20px;
       border: 1px solid var(--border-color);
-      background-color: rgba(4, 18, 36, 0.85);
+      background-color: rgba(0, 0, 0, 0.85);
       color: var(--text);
       outline: none;
       font-size: 0.9rem;
@@ -355,7 +355,7 @@
     }
 
     .cat-btn {
-      background: rgba(4, 18, 36, 0.85);
+      background: rgba(0, 0, 0, 0.85);
       border: 1px solid var(--border-color);
       color: var(--text);
       padding: 0.4rem 0.9rem;
@@ -597,7 +597,6 @@
     <div class="video-player-container">
       <div class="vu-meter-tower" id="vuLeft"></div>
 
-      <!-- VÍDEO DO PLAYER DO TOPO (SEM O TEXTO EM CIMA) -->
       <div class="dj-video-wrapper">
         <video class="dj-video" autoplay loop muted playsinline>
           <source src="marcelo.mp4" type="video/mp4">
@@ -934,7 +933,6 @@
       statusText.innerText = 'CARREGANDO...';
       
       currentTitle.innerText = name;
-      // Removida a linha que alterava o texto antigo do vídeo
 
       audioPlayer.play().then(() => {
         statusText.innerHTML = `<span class="playing-pulse"></span> TOCANDO`;
