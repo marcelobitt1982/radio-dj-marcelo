@@ -64,7 +64,6 @@
       background: #000;
     }
 
-    /* object-fit: contain combinado com flexbox centraliza perfeitamente e evita o alinhamento à esquerda */
     .intro-media-wrapper video {
       width: 100%;
       height: 100%;
@@ -180,23 +179,6 @@
       height: 100%;
       object-fit: contain;
       display: block;
-    }
-
-    .cassette-label {
-      position: absolute;
-      top: 15%;
-      left: 12%;
-      width: 76%;
-      text-align: center;
-      font-family: 'Courier New', Courier, monospace;
-      font-weight: bold;
-      font-size: 0.8rem;
-      color: #111;
-      pointer-events: none;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      z-index: 10;
     }
 
     .vu-meter-tower {
@@ -569,11 +551,6 @@
         height: 100px;
       }
 
-      .cassette-label {
-        font-size: 0.65rem;
-        top: 14%;
-      }
-
       .vu-meter-tower {
         width: 12px;
         height: 100px;
@@ -601,7 +578,7 @@
 
 <body>
 
-  <!-- TELA DE ENTRADA (SPLASH SCREEN) - VÍDEO INTEIRO E PERFEITAMENTE CENTRALIZADO -->
+  <!-- TELA DE ENTRADA (SPLASH SCREEN) -->
   <div id="intro-screen" onclick="fecharIntro()">
     <div class="intro-media-wrapper">
       <video autoplay loop muted playsinline>
@@ -620,9 +597,8 @@
     <div class="video-player-container">
       <div class="vu-meter-tower" id="vuLeft"></div>
 
-      <!-- VÍDEO DO PLAYER DO TOPO -->
+      <!-- VÍDEO DO PLAYER DO TOPO (SEM O TEXTO EM CIMA) -->
       <div class="dj-video-wrapper">
-        <div class="cassette-label" id="cassetteLabel">SELECIONE UMA RÁDIO</div>
         <video class="dj-video" autoplay loop muted playsinline>
           <source src="marcelo.mp4" type="video/mp4">
         </video>
@@ -676,7 +652,6 @@
       }
     }
 
-    // Fecha a tela de entrada automaticamente após 3.5 segundos (ou o usuário pode clicar em qualquer lugar da tela para fechar na hora)
     window.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         fecharIntro();
@@ -733,7 +708,6 @@
     const btnText = document.getElementById('btnText');
     const vuLeft = document.getElementById('vuLeft');
     const vuRight = document.getElementById('vuRight');
-    const cassetteLabel = document.getElementById('cassetteLabel');
     const volumeSlider = document.getElementById('volumeSlider');
     const muteBtn = document.getElementById('muteBtn');
 
@@ -960,7 +934,7 @@
       statusText.innerText = 'CARREGANDO...';
       
       currentTitle.innerText = name;
-      cassetteLabel.innerText = name;
+      // Removida a linha que alterava o texto antigo do vídeo
 
       audioPlayer.play().then(() => {
         statusText.innerHTML = `<span class="playing-pulse"></span> TOCANDO`;
