@@ -6,14 +6,14 @@
   <title>Rádio DJ Marcelo</title>
   <style>
     :root {
-      --bg-color: #000000;      /* Fundo alterado para preto absoluto */
-      --primary: #00d2ff;       /* Cyan Bright */
-      --secondary: #0072ff;     /* Azul Électrico */
-      --primary-glow: rgba(0, 210, 255, 0.4);
-      --secondary-glow: rgba(0, 114, 255, 0.4);
-      --border-color: rgba(0, 210, 255, 0.25);
-      --text: #e6f7ff;
-      --text-muted: #5b82a6;
+      --bg-color: #000000;      /* Fundo preto absoluto */
+      --primary: #a6b1b7;       /* Cinza claro brilhante para efeitos e destaques */
+      --secondary: #6c757d;     /* Cinza médio metálico */
+      --primary-glow: rgba(166, 177, 183, 0.35);
+      --secondary-glow: rgba(108, 117, 125, 0.35);
+      --border-color: rgba(166, 177, 183, 0.25);
+      --text: #f8f9fa;
+      --text-muted: #868e96;
     }
 
     * {
@@ -71,7 +71,7 @@
       display: block;
     }
 
-    /* Fundo dinâmico com ondas em tons de azul preservadas sobre o fundo preto */
+    /* Fundo dinâmico com ondas em tons de cinza sobre o fundo preto */
     .bg-waves {
       position: fixed;
       top: 0;
@@ -87,7 +87,7 @@
       position: absolute;
       border-radius: 50%;
       filter: blur(80px);
-      opacity: 0.45; /* Leve ajuste na opacidade para realçar o contraste com o preto */
+      opacity: 0.35;
       animation-iteration-count: infinite;
       animation-direction: alternate;
       animation-timing-function: ease-in-out;
@@ -96,7 +96,7 @@
     .wave-1 {
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, var(--primary) 0%, rgba(0,210,255,0) 70%);
+      background: radial-gradient(circle, var(--primary) 0%, rgba(166,177,183,0) 70%);
       top: -150px;
       left: -100px;
       animation: floatWave1 12s infinite alternate;
@@ -105,7 +105,7 @@
     .wave-2 {
       width: 650px;
       height: 650px;
-      background: radial-gradient(circle, #0055ff 0%, rgba(0,85,255,0) 70%);
+      background: radial-gradient(circle, #495057 0%, rgba(73,80,87,0) 70%);
       bottom: -150px;
       right: -150px;
       animation: floatWave2 16s infinite alternate;
@@ -114,7 +114,7 @@
     .wave-3 {
       width: 450px;
       height: 450px;
-      background: radial-gradient(circle, rgba(0, 114, 255, 0.3) 0%, rgba(0,0,0,0) 70%);
+      background: radial-gradient(circle, rgba(173, 181, 189, 0.25) 0%, rgba(0,0,0,0) 70%);
       top: 20%;
       left: 20%;
       animation: floatWave3 10s infinite alternate;
@@ -185,7 +185,7 @@
       width: 16px;
       height: 145px;
       background: #000000;
-      border: 1px solid rgba(0, 210, 255, 0.3);
+      border: 1px solid rgba(166, 177, 183, 0.3);
       border-radius: 4px;
       padding: 2px;
       display: flex;
@@ -199,29 +199,29 @@
       width: 100%;
       height: 5px;
       border-radius: 1px;
-      background-color: #0b1c2d;
+      background-color: #1a1d20;
       transition: background-color 0.08s ease, box-shadow 0.08s ease;
     }
 
     .playing .led-block.active.green {
-      background-color: #00d2ff;
-      box-shadow: 0 0 4px #00d2ff;
+      background-color: #379641;
+      box-shadow: 0 0 4px #05f319;
     }
     .playing .led-block.active.yellow {
-      background-color: #0099ff;
-      box-shadow: 0 0 4px #0099ff;
+      background-color: #fff700;
+      box-shadow: 0 0 4px #807b07;
     }
     .playing .led-block.active.orange {
-      background-color: #3366ff;
-      box-shadow: 0 0 4px #3366ff;
+      background-color: #ffa200;
+      box-shadow: 0 0 4px #815006;
     }
     .playing .led-block.active.red {
-      background-color: #7000ff;
-      box-shadow: 0 0 4px #7000ff;
+      background-color: #ff1702;
+      box-shadow: 0 0 4px #701604;
     }
     .playing .led-block.active.blue {
-      background-color: #00f0ff;
-      box-shadow: 0 0 4px #00f0ff;
+      background-color: #f80000;
+      box-shadow: 0 0 4px #ff0000;
     }
 
     .player-sub-bar {
@@ -234,7 +234,7 @@
       padding: 0.4rem 0.8rem;
       background: rgba(0, 0, 0, 0.85);
       border-radius: 6px;
-      border: 1px solid rgba(0, 210, 255, 0.25);
+      border: 1px solid rgba(166, 177, 183, 0.25);
       gap: 10px;
     }
 
@@ -310,7 +310,7 @@
     }
 
     .deck-btn.is-playing {
-      background: linear-gradient(135deg, var(--primary) 0%, #0055ff 100%);
+      background: linear-gradient(135deg, #ced4da 0%, #495057 100%);
       color: #fff;
       box-shadow: 0 0 12px var(--primary-glow);
     }
@@ -489,11 +489,11 @@
 
     .realistic-btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(0, 210, 255, 0.4);
+      box-shadow: 0 6px 15px rgba(166, 177, 183, 0.4);
     }
 
     .radio-item.active .realistic-btn {
-      background: linear-gradient(135deg, var(--primary) 0%, #0055ff 50%, var(--primary) 100%);
+      background: linear-gradient(135deg, #ced4da 0%, #495057 50%, #ced4da 100%);
       box-shadow: 0 0 18px var(--primary-glow);
     }
 
