@@ -6,14 +6,14 @@
   <title>Rádio DJ Marcelo</title>
   <style>
     :root {
-      --bg-color: #000000;      /* Fundo preto absoluto */
-      --primary: #a6b1b7;       /* Cinza claro brilhante para efeitos e destaques */
-      --secondary: #6c757d;     /* Cinza médio metálico */
-      --primary-glow: rgba(166, 177, 183, 0.35);
-      --secondary-glow: rgba(108, 117, 125, 0.35);
-      --border-color: rgba(166, 177, 183, 0.25);
+      --bg-color: #021406;      /* Fundo verde escuro profundo */
+      --primary: #ffe600;       /* Amarelo bandeira ultra vibrante */
+      --secondary: #009c3b;     /* Verde bandeira intermediário */
+      --primary-glow: rgba(255, 230, 0, 0.65);
+      --secondary-glow: rgba(0, 156, 59, 0.4);
+      --border-color: rgba(255, 230, 0, 0.4);
       --text: #f8f9fa;
-      --text-muted: #868e96;
+      --text-muted: #a3c9b1;
     }
 
     * {
@@ -71,7 +71,7 @@
       display: block;
     }
 
-    /* Fundo dinâmico com ondas em tons de cinza sobre o fundo preto */
+    /* Fundo dinâmico com ondas em tons de verde e amarelo */
     .bg-waves {
       position: fixed;
       top: 0;
@@ -96,7 +96,7 @@
     .wave-1 {
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, var(--primary) 0%, rgba(166,177,183,0) 70%);
+      background: radial-gradient(circle, var(--secondary) 0%, rgba(0,156,59,0) 70%);
       top: -150px;
       left: -100px;
       animation: floatWave1 12s infinite alternate;
@@ -105,7 +105,7 @@
     .wave-2 {
       width: 650px;
       height: 650px;
-      background: radial-gradient(circle, #495057 0%, rgba(73,80,87,0) 70%);
+      background: radial-gradient(circle, var(--primary) 0%, rgba(255,230,0,0) 70%);
       bottom: -150px;
       right: -150px;
       animation: floatWave2 16s infinite alternate;
@@ -114,7 +114,7 @@
     .wave-3 {
       width: 450px;
       height: 450px;
-      background: radial-gradient(circle, rgba(173, 181, 189, 0.25) 0%, rgba(0,0,0,0) 70%);
+      background: radial-gradient(circle, rgba(255, 230, 0, 0.25) 0%, rgba(0,0,0,0) 70%);
       top: 20%;
       left: 20%;
       animation: floatWave3 10s infinite alternate;
@@ -141,14 +141,15 @@
     .player-bar {
       position: sticky;
       top: 0;
-      background: #000000;
+      background: rgba(2, 20, 6, 0.95);
+      backdrop-filter: blur(6px);
       border-bottom: 2px solid var(--primary);
       padding: 0.5rem 0.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: none;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
       z-index: 100;
       width: 100%;
     }
@@ -169,8 +170,8 @@
       border-radius: 8px;
       overflow: hidden;
       background: #000;
-      border: none;
-      box-shadow: none;
+      border: 1px solid var(--primary-glow);
+      box-shadow: 0 0 12px rgba(255, 230, 0, 0.3);
       flex-shrink: 0;
     }
 
@@ -184,8 +185,8 @@
     .vu-meter-tower {
       width: 16px;
       height: 145px;
-      background: #000000;
-      border: 1px solid rgba(166, 177, 183, 0.3);
+      background: #011105;
+      border: 1px solid rgba(255, 230, 0, 0.3);
       border-radius: 4px;
       padding: 2px;
       display: flex;
@@ -199,29 +200,29 @@
       width: 100%;
       height: 5px;
       border-radius: 1px;
-      background-color: #1a1d20;
+      background-color: #0b2913;
       transition: background-color 0.08s ease, box-shadow 0.08s ease;
     }
 
     .playing .led-block.active.green {
-      background-color: #379641;
-      box-shadow: 0 0 4px #05f319;
+      background-color: #00ff55;
+      box-shadow: 0 0 6px #00ff55;
     }
     .playing .led-block.active.yellow {
-      background-color: #fff700;
-      box-shadow: 0 0 4px #807b07;
+      background-color: #ffe600;
+      box-shadow: 0 0 8px #ffe600;
     }
     .playing .led-block.active.orange {
       background-color: #ffa200;
-      box-shadow: 0 0 4px #815006;
+      box-shadow: 0 0 6px #ffa200;
     }
     .playing .led-block.active.red {
       background-color: #ff1702;
-      box-shadow: 0 0 4px #701604;
+      box-shadow: 0 0 6px #ff1702;
     }
     .playing .led-block.active.blue {
-      background-color: #f80000;
-      box-shadow: 0 0 4px #ff0000;
+      background-color: #00d2ff;
+      box-shadow: 0 0 6px #00d2ff;
     }
 
     .player-sub-bar {
@@ -232,9 +233,9 @@
       max-width: 600px;
       margin-top: 0.5rem;
       padding: 0.4rem 0.8rem;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(1, 17, 5, 0.9);
       border-radius: 6px;
-      border: 1px solid rgba(166, 177, 183, 0.25);
+      border: 1px solid var(--border-color);
       gap: 10px;
     }
 
@@ -250,6 +251,7 @@
       font-weight: bold;
       font-size: 0.85rem;
       color: var(--primary);
+      text-shadow: 0 0 10px var(--primary-glow);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -285,10 +287,10 @@
     }
 
     .deck-btn {
-      background: linear-gradient(135deg, #e6e6e6 0%, #888888 45%, #ffffff 50%, #444444 80%, #aaaaaa 100%);
+      background: linear-gradient(135deg, #fff266 0%, #cca300 45%, #ffff80 50%, #997a00 80%, #ffcc00 100%);
       border: none;
       outline: none;
-      color: #111;
+      color: #021406;
       font-weight: bold;
       font-size: 0.75rem;
       padding: 0.4rem 0.8rem;
@@ -297,7 +299,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.8);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.9);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       transition: all 0.15s ease;
@@ -310,9 +312,10 @@
     }
 
     .deck-btn.is-playing {
-      background: linear-gradient(135deg, #ced4da 0%, #495057 100%);
-      color: #fff;
-      box-shadow: 0 0 12px var(--primary-glow);
+      background: linear-gradient(135deg, #009c3b 0%, #021406 100%);
+      color: var(--primary);
+      box-shadow: 0 0 18px var(--primary-glow);
+      border: 1px solid var(--primary);
     }
 
     .controls-wrapper {
@@ -335,7 +338,7 @@
       padding: 0.6rem 1rem;
       border-radius: 20px;
       border: 1px solid var(--border-color);
-      background-color: rgba(0, 0, 0, 0.85);
+      background-color: rgba(1, 17, 5, 0.9);
       color: var(--text);
       outline: none;
       font-size: 0.9rem;
@@ -344,7 +347,7 @@
 
     .search-input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 10px var(--primary-glow);
+      box-shadow: 0 0 15px var(--primary-glow);
     }
 
     .category-filter {
@@ -355,7 +358,7 @@
     }
 
     .cat-btn {
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(1, 17, 5, 0.9);
       border: 1px solid var(--border-color);
       color: var(--text);
       padding: 0.4rem 0.9rem;
@@ -368,9 +371,10 @@
 
     .cat-btn.active, .cat-btn:hover {
       background: var(--primary);
-      color: #000;
+      color: #021406;
       font-weight: bold;
       border-color: var(--primary);
+      box-shadow: 0 0 12px var(--primary-glow);
     }
 
     main {
@@ -392,6 +396,7 @@
       padding-bottom: 0.4rem;
       border-bottom: 1px solid var(--border-color);
       color: var(--primary);
+      text-shadow: 0 0 10px var(--primary-glow);
       text-transform: uppercase;
       letter-spacing: 1.5px;
       font-size: 1.1rem;
@@ -426,8 +431,8 @@
     }
 
     .fav-star.active {
-      color: #ffd700;
-      text-shadow: 0 0 5px #ffd700;
+      color: var(--primary);
+      text-shadow: 0 0 10px var(--primary);
     }
 
     .fav-star:hover {
@@ -444,10 +449,10 @@
       position: relative;
       margin-bottom: 0.3rem;
       padding: 5px;
-      background: linear-gradient(135deg, #e6e6e6 0%, #888888 45%, #ffffff 50%, #444444 80%, #aaaaaa 100%);
+      background: linear-gradient(135deg, #fff266 0%, #009c3b 45%, #ffff80 50%, #004d1d 80%, #ffcc00 100%);
       box-shadow: 
-        0 5px 12px rgba(0, 0, 0, 0.75),
-        inset 0 2px 3px rgba(255, 255, 255, 0.8),
+        0 5px 15px rgba(0, 0, 0, 0.8),
+        inset 0 2px 3px rgba(255, 255, 255, 0.9),
         inset 0 -3px 5px rgba(0, 0, 0, 0.6);
       transition: transform 0.15s ease, box-shadow 0.2s ease;
       display: flex;
@@ -460,7 +465,7 @@
       position: absolute;
       top: 4px; left: 4px; right: 4px; bottom: 4px;
       border-radius: 50%;
-      background: linear-gradient(180deg, #222 0%, #555 100%);
+      background: linear-gradient(180deg, #011105 0%, #032b0f 100%);
       z-index: 1;
       box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
     }
@@ -482,19 +487,19 @@
       width: 70%;
       height: 35%;
       border-radius: 50px 50px 0 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 100%);
       z-index: 3;
       pointer-events: none;
     }
 
     .realistic-btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(166, 177, 183, 0.4);
+      box-shadow: 0 6px 20px var(--primary-glow);
     }
 
     .radio-item.active .realistic-btn {
-      background: linear-gradient(135deg, #ced4da 0%, #495057 50%, #ced4da 100%);
-      box-shadow: 0 0 18px var(--primary-glow);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--primary) 100%);
+      box-shadow: 0 0 25px var(--primary-glow);
     }
 
     .radio-origin-label {
@@ -526,7 +531,7 @@
 
     .radio-item.active h3 {
       color: var(--primary);
-      text-shadow: 0 0 8px var(--primary-glow);
+      text-shadow: 0 0 12px var(--primary-glow);
     }
 
     .playing-pulse {
@@ -536,7 +541,7 @@
       background-color: var(--primary);
       border-radius: 50%;
       margin-right: 5px;
-      box-shadow: 0 0 6px var(--primary);
+      box-shadow: 0 0 10px var(--primary);
       animation: pulse 1.2s infinite alternate;
     }
 
